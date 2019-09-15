@@ -61,7 +61,7 @@ namespace ArmorRacks.Things
         public bool CanStoreWeapon(Thing weapon)
         {
             Thing storedWeapon = GetStoredWeapon();
-            return storedWeapon != null;
+            return storedWeapon == null;
         }
 
         public Thing GetStoredWeapon()
@@ -113,7 +113,8 @@ namespace ArmorRacks.Things
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Deep.Look(ref InnerContainer, "InnerContainer", this);
+            Scribe_Deep.Look(ref InnerContainer, "ArmorRackInnerContainer", this);
+            Scribe_Deep.Look(ref Settings, "ArmorRackSettings", this);
         }
 
         public override void Draw()
