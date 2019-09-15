@@ -97,6 +97,7 @@ namespace ArmorRacks.Drawers
                 weaponDrawLoc += new Vector3(0.0f, 0.0f, -0.22f);
                 weaponDrawLoc.y += 5f / 128f;
                 weaponMesh = MeshPool.plane10;
+                angle = 45f;
             }
             else if (ArmorRack.Rotation == Rot4.North)
             {

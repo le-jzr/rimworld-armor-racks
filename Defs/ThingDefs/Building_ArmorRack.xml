@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
     <ThingDef ParentName="BuildingBase">
-        <defName>ArmorRack</defName>
-        <label>Armor Rack</label>
+        <defName>ArmorRacks_ArmorRack</defName>
+        <label>armor rack</label>
         <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating.</description>
         <thingClass>ArmorRacks.Things.ArmorRack</thingClass>
         <graphicData>
