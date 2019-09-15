@@ -128,7 +128,7 @@ namespace ArmorRacks.Things
             ContentsDrawer.DrawAt(drawLoc);
         }
 
-        public void DropApparel()
+        public void DropContents()
         {
             IntVec3 dropPos = new IntVec3(DrawPos);
             InnerContainer.TryDropAll(dropPos, Map, ThingPlaceMode.Near);
@@ -136,7 +136,7 @@ namespace ArmorRacks.Things
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            DropApparel();
+            DropContents();
             base.Destroy(mode);
         }
     }

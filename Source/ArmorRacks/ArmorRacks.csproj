@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Drawers\ArmorRackContentsDrawer.cs" />
+    <Compile Include="ThingComps\ArmorRackComp.cs" />
     <Compile Include="Things\ArmorRack.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

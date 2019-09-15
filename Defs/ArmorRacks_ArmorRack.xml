@@ -49,5 +49,9 @@
         <researchPrerequisites>
             <li>ComplexFurniture</li>
         </researchPrerequisites>
+        <comps>
+            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
+            </li>
+        </comps>
     </ThingDef>
 </Defs>
