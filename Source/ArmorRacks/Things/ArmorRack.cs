@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ArmorRacks.Drawers;
 using RimWorld;
 using UnityEngine;
@@ -59,16 +60,21 @@ namespace ArmorRacks.Things
 
         public bool CanStoreWeapon(Thing weapon)
         {
+            Thing storedWeapon = GetStoredWeapon();
+            return storedWeapon != null;
+        }
+
+        public Thing GetStoredWeapon()
+        {
             foreach (Thing storedThing in GetDirectlyHeldThings())
             {
                 if (storedThing.def.IsWeapon)
                 {
-                    return false;
+                    return storedThing;
                 }
             }
-
-            return true;
-        }
+            return null;
+        } 
 
         public bool CanStoreApparel(Apparel apparel)
         {
@@ -118,7 +124,7 @@ namespace ArmorRacks.Things
         public override void DrawAt(Vector3 drawLoc, bool flip = false)
         {
             base.DrawAt(drawLoc, flip);
-            ContentsDrawer.DrawAt(drawLoc, flip);
+            ContentsDrawer.DrawAt(drawLoc);
         }
 
         public void DropApparel()

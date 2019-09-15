@@ -40,6 +40,7 @@
                 <filter>
                     <categories>
                         <li>Apparel</li>
+                        <li>Weapons</li>
                     </categories>
                 </filter>
             </defaultStorageSettings>
