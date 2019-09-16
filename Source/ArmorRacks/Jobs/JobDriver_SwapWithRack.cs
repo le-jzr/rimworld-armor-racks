@@ -53,13 +53,9 @@ namespace ArmorRacks.Jobs
                     ThingWithComps pawnWeapon = pawn.equipment.Primary;
                     int hasRackWeapon = rackWeapon == null ? 0x00 : 0x01;
                     int hasPawnWeapon = pawnWeapon == null ? 0x00 : 0x10;
-                    Log.Warning("hasRackWeapon " + hasRackWeapon.ToString());
-                    Log.Warning("hasPawnWeapon " + hasPawnWeapon.ToString());
-                    Log.Warning("sum  " + (hasRackWeapon | hasPawnWeapon).ToString());
                     switch (hasRackWeapon | hasPawnWeapon)
                     {
                         case 0x11:
-                            Log.Warning("0x11");
                             pawn.equipment.Remove(pawnWeapon);
                             armorRack.InnerContainer.TryAdd(pawnWeapon);
                             armorRack.InnerContainer.Remove(rackWeapon);
@@ -67,13 +63,11 @@ namespace ArmorRacks.Jobs
                             pawn.equipment.AddEquipment(rackWeapon);
                             break;
                         case 0x01:
-                            Log.Warning("0x01");
                             armorRack.InnerContainer.Remove(rackWeapon);
                             pawn.equipment.MakeRoomFor(rackWeapon);
                             pawn.equipment.AddEquipment(rackWeapon);
                             break;
                         case 0x10:
-                            Log.Warning("0x10");
                             pawn.equipment.Remove(pawnWeapon);
                             armorRack.InnerContainer.TryAdd(pawnWeapon);
                             break;

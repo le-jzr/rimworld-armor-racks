@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+    <ArmorRacks_CannotEquipNonviolent>Cannot equip from rack (rack has weapon but pawn is non-violent)</ArmorRacks_CannotEquipNonviolent>
+    <ArmorRacks_WearRackFloatMenuLabel>Equip from armor rack</ArmorRacks_WearRackFloatMenuLabel>
+    <ArmorRacks_WearRackFloatMenuLabel_Empty>Cannot equip from rack (empty)</ArmorRacks_WearRackFloatMenuLabel_Empty>
+    <ArmorRacks_SwapRackFloatMenuLabel>Swap with armor rack</ArmorRacks_SwapRackFloatMenuLabel>
+    <ArmorRacks_ClearRackFloatMenuLabel>Clear out armor rack</ArmorRacks_ClearRackFloatMenuLabel>
+    <ArmorRacks_ClearRackFloatMenuLabel_Empty>Cannot clear out rack (empty)</ArmorRacks_ClearRackFloatMenuLabel_Empty>
+    <ArmorRacks_ClearForbidRackFloatMenuLabel>Clear out and forbid armor rack</ArmorRacks_ClearForbidRackFloatMenuLabel>
+</LanguageData>

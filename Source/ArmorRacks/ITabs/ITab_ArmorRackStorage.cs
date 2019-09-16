@@ -33,7 +33,7 @@ namespace ArmorRacks.ITabs
             float num = 0.0f;
             ArmorRack armorRack = SelThing as ArmorRack;
             
-            Widgets.ListSeparator(ref num, viewRect.width, "Weapon".Translate());
+            Widgets.ListSeparator(ref num, viewRect.width, "Equipment".Translate());
             Thing storedWeapon = armorRack.GetStoredWeapon();
             if (storedWeapon != null)
             {

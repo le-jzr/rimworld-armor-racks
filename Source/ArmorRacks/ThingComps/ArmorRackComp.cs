@@ -47,14 +47,14 @@ namespace ArmorRacks.ThingComps
             
             if (armorRack.InnerContainer.Count != 0)
             {
-                // Equip from
                 if (selPawn.story.WorkTagIsDisabled(WorkTags.Violent) && armorRack.GetStoredWeapon() != null)
                 {
-                    yield return new FloatMenuOption("Cannot equip from rack (rack has weapon but pawn is non-violent)", null);
+                    yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
                 }
                 else
                 {
-                    var equipFromOption = new FloatMenuOption("Equip from armor rack", delegate
+                    // Equip from
+                    var equipFromOption = new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel".Translate(), delegate
                     {
                         var target_info = new LocalTargetInfo(armorRack);
                         var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
@@ -62,7 +62,8 @@ namespace ArmorRacks.ThingComps
                     });
                     yield return FloatMenuUtility.DecoratePrioritizedTask(equipFromOption, selPawn, armorRack, "ReservedBy");
                     
-                    var swapWithOption = new FloatMenuOption("Swap with armor rack", delegate
+                    // Swap with
+                    var swapWithOption = new FloatMenuOption("ArmorRacks_SwapRackFloatMenuLabel".Translate(), delegate
                     {
                         var target_info = new LocalTargetInfo(armorRack);
                         var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
@@ -72,7 +73,7 @@ namespace ArmorRacks.ThingComps
                 }
                 
                 // Clear out
-                var clearOutOption = new FloatMenuOption("Clear out armor rack", delegate
+                var clearOutOption = new FloatMenuOption("ArmorRacks_ClearRackFloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
                     var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearRack, target_info);
@@ -81,7 +82,7 @@ namespace ArmorRacks.ThingComps
                 yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutOption, selPawn, armorRack, "ReservedBy");
             
                 // Clear out and forbid
-                var clearOutForbidOption = new FloatMenuOption("Clear out and forbid armor rack", delegate
+                var clearOutForbidOption = new FloatMenuOption("ArmorRacks_ClearForbidRackFloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
                     var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearForbidRack, target_info);
@@ -91,8 +92,8 @@ namespace ArmorRacks.ThingComps
             }
             else
             {
-                yield return new FloatMenuOption("Cannot equip from rack (empty)", null);
-                yield return new FloatMenuOption("Cannot clear out rack (empty)", null);
+                yield return new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel_Empty".Translate(), null);
+                yield return new FloatMenuOption("ArmorRacks_ClearRackFloatMenuLabel_Empty".Translate(), null);
             }
         }
     }
