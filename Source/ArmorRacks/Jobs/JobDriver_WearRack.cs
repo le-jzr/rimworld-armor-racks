@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ArmorRacks.Things;
 using RimWorld;
 using Verse;
@@ -26,10 +27,7 @@ namespace ArmorRacks.Jobs
                     var armorRack = TargetThingA as ArmorRack;
                     foreach (Apparel rackApparel in armorRack.GetStoredApparel())
                     {
-                        // TODO parts check
-                        Log.Warning("Removing rack apparel " + rackApparel.ToString());
                         armorRack.InnerContainer.Remove(rackApparel);
-                        Log.Warning("Wearing rack apparel " + rackApparel.ToString());
                         pawn.apparel.Wear(rackApparel, true);
                     }
 
@@ -38,7 +36,6 @@ namespace ArmorRacks.Jobs
                     {
                         armorRack.InnerContainer.Remove(rackWeapon);
                         pawn.equipment.MakeRoomFor(rackWeapon);
-                        // TODO error if rack has weapon but pawn is non-violet
                         pawn.equipment.AddEquipment(rackWeapon);   
                     }
                 }

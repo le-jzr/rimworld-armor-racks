@@ -48,13 +48,28 @@ namespace ArmorRacks.ThingComps
             if (armorRack.InnerContainer.Count != 0)
             {
                 // Equip from
-                var equipFromOption = new FloatMenuOption("Equip from armor rack", delegate
+                if (selPawn.story.WorkTagIsDisabled(WorkTags.Violent) && armorRack.GetStoredWeapon() != null)
                 {
-                    var target_info = new LocalTargetInfo(armorRack);
-                    var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
-                    selPawn.jobs.TryTakeOrderedJob(wearRackJob);
-                });
-                yield return FloatMenuUtility.DecoratePrioritizedTask(equipFromOption, selPawn, armorRack, "ReservedBy");
+                    yield return new FloatMenuOption("Cannot equip from rack (rack has weapon but pawn is non-violent)", null);
+                }
+                else
+                {
+                    var equipFromOption = new FloatMenuOption("Equip from armor rack", delegate
+                    {
+                        var target_info = new LocalTargetInfo(armorRack);
+                        var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
+                        selPawn.jobs.TryTakeOrderedJob(wearRackJob);
+                    });
+                    yield return FloatMenuUtility.DecoratePrioritizedTask(equipFromOption, selPawn, armorRack, "ReservedBy");
+                    
+                    var swapWithOption = new FloatMenuOption("Swap with armor rack", delegate
+                    {
+                        var target_info = new LocalTargetInfo(armorRack);
+                        var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
+                        selPawn.jobs.TryTakeOrderedJob(wearRackJob);
+                    });
+                    yield return FloatMenuUtility.DecoratePrioritizedTask(swapWithOption, selPawn, armorRack, "ReservedBy");
+                }
                 
                 // Clear out
                 var clearOutOption = new FloatMenuOption("Clear out armor rack", delegate

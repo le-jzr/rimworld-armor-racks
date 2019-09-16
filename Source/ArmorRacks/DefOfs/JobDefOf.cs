@@ -9,5 +9,6 @@ namespace ArmorRacks.DefOfs
         public static JobDef ArmorRacks_JobClearRack;
         public static JobDef ArmorRacks_JobClearForbidRack;
         public static JobDef ArmorRacks_JobWearRack;
+        public static JobDef ArmorRacks_JobSwapWithRack;
     }
 }

@@ -20,4 +20,13 @@
         <suspendable>false</suspendable>
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
+
+    <JobDef>
+        <defName>ArmorRacks_JobSwapWithRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriverSwapWithRack</driverClass>
+        <reportString>Swapping equipment with armor rack.</reportString>
+        <suspendable>false</suspendable>
+        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    </JobDef>
+    
 </Defs>
