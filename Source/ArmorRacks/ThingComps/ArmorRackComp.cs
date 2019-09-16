@@ -32,12 +32,53 @@ namespace ArmorRacks.ThingComps
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
-            yield return new FloatMenuOption("Clear out armor rack", delegate
+
+            if (ForbidUtility.IsForbidden(armorRack, selPawn))
             {
-                var target_info = new LocalTargetInfo(armorRack);
-                var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearRack, target_info);
-                selPawn.jobs.TryTakeOrderedJob(clearRackJob);
-            });
+                yield break;
+            }
+            
+            if (!selPawn.CanReach(armorRack, PathEndMode.Touch, Danger.Deadly, false, TraverseMode.ByPawn))
+            {
+                FloatMenuOption failer = new FloatMenuOption("CannotUseNoPath".Translate(), null, MenuOptionPriority.Default, null, null, 0f, null, null);
+                yield return failer;
+                yield break;
+            }
+            
+            if (armorRack.InnerContainer.Count != 0)
+            {
+                // Equip from
+                var equipFromOption = new FloatMenuOption("Equip from armor rack", delegate
+                {
+                    var target_info = new LocalTargetInfo(armorRack);
+                    var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
+                    selPawn.jobs.TryTakeOrderedJob(wearRackJob);
+                });
+                yield return FloatMenuUtility.DecoratePrioritizedTask(equipFromOption, selPawn, armorRack, "ReservedBy");
+                
+                // Clear out
+                var clearOutOption = new FloatMenuOption("Clear out armor rack", delegate
+                {
+                    var target_info = new LocalTargetInfo(armorRack);
+                    var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearRack, target_info);
+                    selPawn.jobs.TryTakeOrderedJob(clearRackJob);
+                });
+                yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutOption, selPawn, armorRack, "ReservedBy");
+            
+                // Clear out and forbid
+                var clearOutForbidOption = new FloatMenuOption("Clear out and forbid armor rack", delegate
+                {
+                    var target_info = new LocalTargetInfo(armorRack);
+                    var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearForbidRack, target_info);
+                    selPawn.jobs.TryTakeOrderedJob(clearRackJob);
+                });
+                yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutForbidOption, selPawn, armorRack, "ReservedBy");
+            }
+            else
+            {
+                yield return new FloatMenuOption("Cannot equip from rack (empty)", null);
+                yield return new FloatMenuOption("Cannot clear out rack (empty)", null);
+            }
         }
     }
 }

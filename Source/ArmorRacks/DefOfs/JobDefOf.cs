@@ -7,5 +7,7 @@ namespace ArmorRacks.DefOfs
     public static class ArmorRacksJobDefOf
     {
         public static JobDef ArmorRacks_JobClearRack;
+        public static JobDef ArmorRacks_JobClearForbidRack;
+        public static JobDef ArmorRacks_JobWearRack;
     }
 }

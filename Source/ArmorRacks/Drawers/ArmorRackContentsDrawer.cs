@@ -4,6 +4,7 @@ using ArmorRacks.Things;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using System;
 
 namespace ArmorRacks.Drawers
 {
@@ -20,11 +21,6 @@ namespace ArmorRacks.Drawers
 
         public void DrawAt(Vector3 drawLoc)
         {
-            if (ApparelGraphics.Count != ArmorRack.GetStoredApparel().Count())
-            {
-                ResolveApparelGraphics();
-            }
-
             DrawApparel(drawLoc);
             DrawWeapon(drawLoc);
         }
@@ -129,7 +125,9 @@ namespace ArmorRacks.Drawers
         public void ResolveApparelGraphics()
         {
             ApparelGraphics.Clear();
-            foreach (Apparel apparel in ArmorRack.GetStoredApparel())
+            var apparelList = ArmorRack.GetStoredApparel();
+            apparelList.Sort(((b, a) => a.def.apparel.LastLayer.drawOrder.CompareTo(b.def.apparel.LastLayer.drawOrder)));
+            foreach (Apparel apparel in apparelList)
             {
                 ApparelGraphicRecord rec;
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))

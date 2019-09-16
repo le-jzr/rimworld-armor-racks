@@ -9,11 +9,6 @@ namespace ArmorRacks.Jobs
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            if (!pawn.CanReserve(TargetThingA))
-            {
-                return false;
-            }
-
             return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
         }
 

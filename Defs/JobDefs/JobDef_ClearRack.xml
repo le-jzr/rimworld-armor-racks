@@ -7,4 +7,17 @@
         <suspendable>false</suspendable>
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
+
+    <JobDef parentName="ArmorRacks_JobClearRack">
+        <defName>ArmorRacks_JobClearForbidRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriverClearForbidRack</driverClass>
+    </JobDef>
+
+    <JobDef>
+        <defName>ArmorRacks_JobWearRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriverWearRack</driverClass>
+        <reportString>Equipping from armor rack.</reportString>
+        <suspendable>false</suspendable>
+        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    </JobDef>
 </Defs>

@@ -47,7 +47,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DefOfs\JobDefOf.cs" />
+    <Compile Include="Jobs\JobDriver_ClearForbidRack.cs" />
     <Compile Include="Jobs\JobDriver_ClearRack.cs" />
+    <Compile Include="Jobs\JobDriver_WearRack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Drawers\ArmorRackContentsDrawer.cs" />
     <Compile Include="ThingComps\ArmorRackComp.cs" />

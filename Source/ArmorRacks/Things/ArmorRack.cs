@@ -7,10 +7,43 @@ using Verse;
 
 namespace ArmorRacks.Things
 {
+    public class ArmorRackInnerContainer : ThingOwner<Thing>
+    {
+        public ArmorRackInnerContainer()
+        {
+        }
+
+        public ArmorRackInnerContainer(IThingHolder owner)
+            : base(owner)
+        {
+        }
+
+        public ArmorRackInnerContainer(IThingHolder owner, bool oneStackOnly, LookMode contentsLookMode = LookMode.Deep)
+            : base(owner, oneStackOnly, contentsLookMode)
+        {
+        }
+
+        public override bool TryAdd(Thing item, bool canMergeWithExistingStacks = true)
+        {
+            var result = base.TryAdd(item, canMergeWithExistingStacks);
+            var armorRack = owner as ArmorRack; 
+            armorRack.ContentsChanged(item);
+            return result;
+        }
+
+        public override bool Remove(Thing item)
+        {
+            var result = base.Remove(item);
+            var armorRack = owner as ArmorRack;
+            armorRack.ContentsChanged(item);
+            return result;
+        }
+    }
+    
     public class ArmorRack : Building, IHaulDestination, IThingHolder
     {
         public StorageSettings Settings;
-        public ThingOwner<Thing> InnerContainer;
+        public ArmorRackInnerContainer InnerContainer;
         public ArmorRackContentsDrawer ContentsDrawer;
         public BodyDef BodyDef => BodyDefOf.Human;
         public BodyTypeDef BodyTypeDef => BodyTypeDefOf.Male;
@@ -18,7 +51,7 @@ namespace ArmorRacks.Things
 
         public ArmorRack()
         {
-            InnerContainer = new ThingOwner<Thing>(this, false);
+            InnerContainer = new ArmorRackInnerContainer(this, false);
             ContentsDrawer = new ArmorRackContentsDrawer(this);
         }
 
@@ -66,7 +99,8 @@ namespace ArmorRacks.Things
 
         public Thing GetStoredWeapon()
         {
-            foreach (Thing storedThing in GetDirectlyHeldThings())
+            var innerList = InnerContainer.InnerListForReading;
+            foreach (Thing storedThing in innerList)
             {
                 if (storedThing.def.IsWeapon)
                 {
@@ -89,15 +123,19 @@ namespace ArmorRacks.Things
             return true;
         }
 
-        public IEnumerable<Apparel> GetStoredApparel()
+        public List<Apparel> GetStoredApparel()
         {
-            foreach (Thing storedThing in GetDirectlyHeldThings())
+            var innerList = InnerContainer.InnerListForReading;
+            var result = new List<Apparel>();
+            foreach (Thing storedThing in innerList)
             {
                 if (storedThing.def.IsApparel)
                 {
-                    yield return (Apparel) storedThing;
+                    result.Add((Apparel) storedThing);
                 }
             }
+
+            return result;
         }
 
         public void GetChildHolders(List<IThingHolder> outChildren)
@@ -119,7 +157,8 @@ namespace ArmorRacks.Things
 
         public override void Draw()
         {
-            this.DrawAt(DrawPos);
+            DrawAt(DrawPos);
+            Comps_PostDraw();
         }
 
         public override void DrawAt(Vector3 drawLoc, bool flip = false)
@@ -138,6 +177,11 @@ namespace ArmorRacks.Things
         {
             DropContents();
             base.Destroy(mode);
+        }
+
+        public virtual void ContentsChanged(Thing thing)
+        {
+            ContentsDrawer.ResolveApparelGraphics();
         }
     }
 }
