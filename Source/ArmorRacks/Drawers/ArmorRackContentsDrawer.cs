@@ -125,7 +125,7 @@ namespace ArmorRacks.Drawers
         public void ResolveApparelGraphics()
         {
             ApparelGraphics.Clear();
-            var apparelList = ArmorRack.GetStoredApparel();
+            var apparelList = ArmorRack.GetStoredApparel().ToList();
             apparelList.Sort(((a, b) => a.def.apparel.LastLayer.drawOrder.CompareTo(b.def.apparel.LastLayer.drawOrder)));
             foreach (Apparel apparel in apparelList)
             {
