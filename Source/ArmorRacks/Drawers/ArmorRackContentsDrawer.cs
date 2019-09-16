@@ -87,13 +87,13 @@ namespace ArmorRacks.Drawers
 
             Vector3 weaponDrawLoc = drawLoc;
             Mesh weaponMesh;
-            float angle = 90f;
+            float angle = -90f;
             if (ArmorRack.Rotation == Rot4.South)
             {
-                weaponDrawLoc += new Vector3(0.0f, 0.0f, -0.22f);
+                weaponDrawLoc += new Vector3(0.0f, 0.0f, 0.0f);
                 weaponDrawLoc.y += 5f / 128f;
                 weaponMesh = MeshPool.plane10;
-                angle = 45f;
+                angle = -45f;
             }
             else if (ArmorRack.Rotation == Rot4.North)
             {
@@ -112,7 +112,7 @@ namespace ArmorRacks.Drawers
                 weaponDrawLoc += new Vector3(-0.3f, 0.0f, -0.22f);
                 weaponDrawLoc.y += 5f / 128f;
                 weaponMesh = MeshPool.plane10Flip;
-                angle = -90f;
+                angle = 90f;
             }
 
             Graphic_StackCount graphic = storedWeapon.Graphic as Graphic_StackCount;
