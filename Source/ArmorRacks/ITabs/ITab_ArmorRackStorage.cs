@@ -15,8 +15,8 @@ namespace ArmorRacks.ITabs
         public ITabArmorRackContents()
         {
             this.size = WinSize;
-            this.labelKey = "TabRack";
-            this.tutorTag = "Rack";
+            this.labelKey = "ArmorRacks_ArmorRackContentsTab_LabelKey";
+            this.tutorTag = "ArmorRack";
         }
 
         protected override void FillTab()

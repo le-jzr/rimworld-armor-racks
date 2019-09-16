@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using ArmorRacks.DefOfs;
-using ArmorRacks.Jobs;
 using ArmorRacks.Things;
 using RimWorld;
 using Verse;
@@ -12,7 +11,7 @@ namespace ArmorRacks.ThingComps
     public class ArmorRackCompProperties : CompProperties
     {
         public bool myExampleBool;
-        
+
         public ArmorRackCompProperties()
         {
             this.compClass = typeof(ArmorRackComp);
@@ -23,16 +22,24 @@ namespace ArmorRacks.ThingComps
             this.compClass = compClass;
         }
     }
-    
+
     public class ArmorRackComp : ThingComp
     {
-        public ArmorRackCompProperties Props => (ArmorRackCompProperties)this.props;
-        public bool ExampleBool => Props.myExampleBool;
+        public ArmorRackCompProperties Props => (ArmorRackCompProperties) this.props;
+
+        protected bool IsPawnAllowedWeapons(Pawn pawn)
+        {
+            return !(pawn.story.WorkTagIsDisabled(WorkTags.Violent) && ((ArmorRack) parent).GetStoredWeapon() != null);
+        }
+
+        protected bool RackHasItems()
+        {
+            return ((ArmorRack) parent).InnerContainer.Count != 0;
+        }
 
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
-
             if (ForbidUtility.IsForbidden(armorRack, selPawn))
             {
                 yield break;
@@ -44,14 +51,28 @@ namespace ArmorRacks.ThingComps
                 yield return failer;
                 yield break;
             }
-            
-            if (armorRack.InnerContainer.Count != 0)
+
+            var nonViolentOptionYielded = false;
+            if (IsPawnAllowedWeapons(selPawn))
             {
-                if (selPawn.story.WorkTagIsDisabled(WorkTags.Violent) && armorRack.GetStoredWeapon() != null)
+                // Swap with
+                var swapWithOption = new FloatMenuOption("ArmorRacks_SwapRackFloatMenuLabel".Translate(), delegate
                 {
-                    yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
-                }
-                else
+                    var target_info = new LocalTargetInfo(armorRack);
+                    var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
+                    selPawn.jobs.TryTakeOrderedJob(wearRackJob);
+                });
+                yield return FloatMenuUtility.DecoratePrioritizedTask(swapWithOption, selPawn, armorRack, "ReservedBy");
+            }
+            else
+            {
+                yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
+                nonViolentOptionYielded = true;
+            }
+            
+            if (RackHasItems())
+            {
+                if (IsPawnAllowedWeapons(selPawn))
                 {
                     // Equip from
                     var equipFromOption = new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel".Translate(), delegate
@@ -61,15 +82,10 @@ namespace ArmorRacks.ThingComps
                         selPawn.jobs.TryTakeOrderedJob(wearRackJob);
                     });
                     yield return FloatMenuUtility.DecoratePrioritizedTask(equipFromOption, selPawn, armorRack, "ReservedBy");
-                    
-                    // Swap with
-                    var swapWithOption = new FloatMenuOption("ArmorRacks_SwapRackFloatMenuLabel".Translate(), delegate
-                    {
-                        var target_info = new LocalTargetInfo(armorRack);
-                        var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
-                        selPawn.jobs.TryTakeOrderedJob(wearRackJob);
-                    });
-                    yield return FloatMenuUtility.DecoratePrioritizedTask(swapWithOption, selPawn, armorRack, "ReservedBy");
+                }
+                else if (!nonViolentOptionYielded)
+                {
+                    yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
                 }
                 
                 // Clear out
