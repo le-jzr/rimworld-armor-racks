@@ -31,7 +31,9 @@
         </stuffCategories>
         <inspectorTabs>
             <li>ITab_Storage</li>
+            <li>ArmorRacks.ITabs.ITabArmorRackContents</li>
         </inspectorTabs>
+        <defaultPlacingRot>South</defaultPlacingRot>
         <building>
             <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
             <ignoreStoredThingsBeauty>false</ignoreStoredThingsBeauty>
