@@ -12,6 +12,7 @@ namespace ArmorRacks.Drawers
     {
         public readonly ArmorRack ArmorRack;
         public List<ApparelGraphicRecord> ApparelGraphics;
+        public bool IsApparelResolved = false;
 
         public ArmorRackContentsDrawer(ArmorRack armorRack)
         {
@@ -21,7 +22,7 @@ namespace ArmorRacks.Drawers
 
         public void DrawAt(Vector3 drawLoc)
         {
-            if (ApparelGraphics.Count == 0)
+            if (!IsApparelResolved)
             {
                 ResolveApparelGraphics();
             }
@@ -138,6 +139,7 @@ namespace ArmorRacks.Drawers
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
                     ApparelGraphics.Add(rec);
             }
+            IsApparelResolved = true;
         }
 
         public Vector3 BaseHeadOffsetAt(Rot4 rotation)

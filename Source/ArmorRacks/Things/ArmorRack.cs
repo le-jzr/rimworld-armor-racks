@@ -50,7 +50,7 @@ namespace ArmorRacks.Things
         public BodyDef BodyDef => BodyDefOf.Human;
         public BodyTypeDef BodyTypeDef => BodyTypeDefOf.Male;
         public bool StorageTabVisible => true;
-        private List<Pawn> assignedPawns = new List<Pawn>();
+        public Pawn AssignedPawn;
 
         public ArmorRack()
         {
@@ -156,7 +156,9 @@ namespace ArmorRacks.Things
             base.ExposeData();
             Scribe_Deep.Look(ref InnerContainer, "ArmorRackInnerContainer", this);
             Scribe_Deep.Look(ref Settings, "ArmorRackSettings", this);
+            Scribe_References.Look(ref AssignedPawn, "AssignedPawn");
         }
+        
 
         public override void Draw()
         {
@@ -184,12 +186,13 @@ namespace ArmorRacks.Things
 
         public virtual void ContentsChanged(Thing thing)
         {
-            ContentsDrawer.ResolveApparelGraphics();
+            Log.Warning("Content changed");
+            ContentsDrawer.IsApparelResolved = false;
         }
         
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            UnassignAll();
+            UnassignPawn();
             base.DeSpawn(mode);
         }
 
@@ -203,35 +206,56 @@ namespace ArmorRacks.Things
             }
         }
 
-        public IEnumerable<Pawn> AssignedPawns => assignedPawns;
-
         public int MaxAssignedPawnsCount => 1;
+
+        public IEnumerable<Pawn> AssignedPawns
+        {
+            get
+            {
+                if (AssignedPawn != null)
+                {
+                    yield return AssignedPawn;
+                }
+            }
+        }
 
         public void TryAssignPawn(Pawn pawn)
         {
-            UnassignAll();
-            assignedPawns.Add(pawn);
-            pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Add(this);
+            AssignedPawn = pawn;
         }
 
         public void TryUnassignPawn(Pawn pawn)
         {
-            assignedPawns.Remove(pawn);
-            pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Remove(this);
+            UnassignPawn();
         }
         
-
-        public void UnassignAll()
+        public void UnassignPawn()
         {
-            foreach (var assignedPawn in assignedPawns.ToList())
-            {
-                TryUnassignPawn(assignedPawn);
-            }
+            AssignedPawn = null;
         }
-        
+
         public bool AssignedAnything(Pawn pawn)
         {
-            return pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Count > 0;
+            return AssignedPawn == pawn;
+        }
+
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            foreach (Gizmo g in base.GetGizmos())
+            {
+                yield return g;
+            }
+            yield return new Command_Action
+            {
+                defaultLabel = "CommandBedSetOwnerLabel".Translate(),
+                icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", true),
+                defaultDesc = "CommandBedSetOwnerDesc".Translate(),
+                action = delegate()
+                {
+                    Find.WindowStack.Add(new Dialog_AssignBuildingOwner(this));
+                },
+                hotKey = KeyBindingDefOf.Misc3
+            };
         }
     }
 }

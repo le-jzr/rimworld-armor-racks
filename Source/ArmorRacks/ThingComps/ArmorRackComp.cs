@@ -98,50 +98,31 @@ namespace ArmorRacks.ThingComps
                     selPawn.jobs.TryTakeOrderedJob(clearRackJob);
                 });
                 yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutForbidOption, selPawn, armorRack, "ReservedBy");
-                
-                // Assign
-                var assignOption = new FloatMenuOption("ArmorRacks_AssignRackFloatMenuLabel".Translate(), delegate
-                {
-                    armorRack.TryAssignPawn(selPawn);
-                });
-                if (armorRack.AssignedPawns.Count() != 0)
-                {
-                    if (!armorRack.AssignedPawns.Contains(selPawn))
-                    {
-                        assignOption.Label = "ArmorRacks_AssignRackFloatMenuLabel_Owned".Translate((NamedArgument) armorRack.AssignedPawns.First());
-                        yield return assignOption;
-                    }
-                }
-                else
-                {
-                    yield return assignOption;
-                }
-
             }
             else
             {
                 yield return new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel_Empty".Translate(), null);
                 yield return new FloatMenuOption("ArmorRacks_ClearRackFloatMenuLabel_Empty".Translate(), null);
             }
+            
         }
     }
-
-    public class ArmorRackPawnOwnershipComp : ThingComp
-    {
-        public List<ArmorRack> assignedArmorRacks = new List<ArmorRack>();
-    }
+    
 
     public class ArmorRackUseCommandComp : ThingComp
     {
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            if (this.parent is Pawn pawn)
+            if (parent is Pawn pawn)
             {
-                var racksComp = pawn.GetComp<ArmorRackPawnOwnershipComp>();
-                foreach (ArmorRack armorRack in racksComp.assignedArmorRacks)
+                var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
+                foreach (var rack in racks)
                 {
-                    yield return new ArmorRackWearCommand(armorRack, pawn);    
-                    yield return new ArmorRackSwapCommand(armorRack, pawn);    
+                    if (rack.AssignedAnything(pawn))
+                    {
+                        yield return new ArmorRackWearCommand(rack, pawn);    
+                        yield return new ArmorRackSwapCommand(rack, pawn);   
+                    }
                 }
             }
         }
