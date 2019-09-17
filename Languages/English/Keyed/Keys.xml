@@ -1,21 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-    <ArmorRacks_CannotEquipNonviolent>Cannot equip from rack (rack has weapon but pawn is non-violent)</ArmorRacks_CannotEquipNonviolent>
-    <ArmorRacks_WearRackFloatMenuLabel>Equip from armor rack</ArmorRacks_WearRackFloatMenuLabel>
-    <ArmorRacks_WearRackFloatMenuLabel_Empty>Cannot equip from rack (empty)</ArmorRacks_WearRackFloatMenuLabel_Empty>
-    <ArmorRacks_SwapRackFloatMenuLabel>Swap with armor rack</ArmorRacks_SwapRackFloatMenuLabel>
-    <ArmorRacks_ClearRackFloatMenuLabel>Clear out armor rack</ArmorRacks_ClearRackFloatMenuLabel>
-    <ArmorRacks_ClearRackFloatMenuLabel_Empty>Cannot clear out rack (empty)</ArmorRacks_ClearRackFloatMenuLabel_Empty>
-    <ArmorRacks_ClearForbidRackFloatMenuLabel>Clear out and forbid armor rack</ArmorRacks_ClearForbidRackFloatMenuLabel>
-    <ArmorRacks_ArmorRackContentsTab_LabelKey>Rack</ArmorRacks_ArmorRackContentsTab_LabelKey>
-    <ArmorRacks_AssignRackFloatMenuLabel>Set colonist as owner</ArmorRacks_AssignRackFloatMenuLabel>
-    <ArmorRacks_AssignRackFloatMenuLabel_Owned>Set colonist as owner (Cancel ownership by {0_label})</ArmorRacks_AssignRackFloatMenuLabel_Owned>
-    
+    <ArmorRacks_ClearRack_FloatMenuLabel>Clear out armor rack</ArmorRacks_ClearRack_FloatMenuLabel>
+    <ArmorRacks_ClearRack_FloatMenuLabel_Empty>Cannot clear out rack (empty)</ArmorRacks_ClearRack_FloatMenuLabel_Empty>
+    <ArmorRacks_ClearRack_JobFailMessage_NonViolent>{0} cannot clear out armor rack (rack is empty)</ArmorRacks_ClearRack_JobFailMessage_NonViolent>
+    <ArmorRacks_ClearForbidRack_FloatMenuLabel>Clear out and forbid armor rack</ArmorRacks_ClearForbidRack_FloatMenuLabel>
+
+    <ArmorRacks_WearRack_FloatMenuLabel>Equip from armor rack</ArmorRacks_WearRack_FloatMenuLabel>
+    <ArmorRacks_WearRack_FloatMenuLabel_Empty>Cannot equip from rack (empty)</ArmorRacks_WearRack_FloatMenuLabel_Empty>
+    <ArmorRacks_WearRack_FloatMenuLabel_NonViolent>Cannot equip from rack (rack has weapon but pawn is non-violent)</ArmorRacks_WearRack_FloatMenuLabel_NonViolent>
     <ArmorRacks_WearRack_JobFailMessage_Empty>{0} cannot equip from armor rack (rack is empty)</ArmorRacks_WearRack_JobFailMessage_Empty>
     <ArmorRacks_WearRack_JobFailMessage_NonViolent>{0} cannot equip from armor rack (rack has weapon but pawn is non-violent)</ArmorRacks_WearRack_JobFailMessage_NonViolent>
     
     <ArmorRacks_SwapWithRack_JobFailMessage_NonViolent>{0} cannot swap with armor rack (rack has weapon but pawn is non-violent)</ArmorRacks_SwapWithRack_JobFailMessage_NonViolent>
+    <ArmorRacks_SwapWithRack_FloatMenuLabel>Swap with armor rack</ArmorRacks_SwapWithRack_FloatMenuLabel>
     
-    <ArmorRacks_ClearRack_JobFailMessage_NonViolent>{0} cannot clear out armor rack (rack is empty)</ArmorRacks_ClearRack_JobFailMessage_NonViolent>
+    <ArmorRacks_ArmorRackITab_LabelKey>Rack</ArmorRacks_ArmorRackITab_LabelKey>
     
 </LanguageData>

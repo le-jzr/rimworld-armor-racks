@@ -52,8 +52,7 @@
             <li>ComplexFurniture</li>
         </researchPrerequisites>
         <comps>
-            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
-            </li>
+            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties" />
             <li>
                 <compClass>CompForbiddable</compClass>
             </li>

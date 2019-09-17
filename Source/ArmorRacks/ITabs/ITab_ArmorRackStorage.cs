@@ -15,7 +15,7 @@ namespace ArmorRacks.ITabs
         public ITabArmorRackContents()
         {
             this.size = WinSize;
-            this.labelKey = "ArmorRacks_ArmorRackContentsTab_LabelKey";
+            this.labelKey = "ArmorRacks_ArmorRackITab_LabelKey";
             this.tutorTag = "ArmorRack";
         }
 

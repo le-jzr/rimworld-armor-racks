@@ -1,4 +1,6 @@
-﻿using ArmorRacks.DefOfs;
+﻿using System.Collections.Generic;
+using ArmorRacks.DefOfs;
+using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using UnityEngine;
 using Verse;
@@ -6,47 +8,61 @@ using Verse.AI;
 
 namespace ArmorRacks.Commands
 {
-    public class ArmorRackWearCommand : Command
+    public class ArmorRackInteractCommand : Command
     {
         public ArmorRack ArmorRack;
         public Pawn Pawn;
 
-        public ArmorRackWearCommand(ArmorRack armorRack, Pawn pawn)
+        public ArmorRackInteractCommand(ArmorRack armorRack, Pawn pawn)
         {
-            defaultLabel = "ArmorRacks_WearRackFloatMenuLabel".Translate();
-            defaultDesc = "ArmorRacks_WearRackFloatMenuLabel".Translate();
             ArmorRack = armorRack;
             Pawn = pawn;
+        }
+
+        public override string Label
+        {
+            get
+            {
+                var selectedJobDef = Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef;
+                if (selectedJobDef == ArmorRacksJobDefOf.ArmorRacks_JobWearRack)
+                {
+                    return "ArmorRacks_WearRack_FloatMenuLabel".Translate();
+                }
+
+                return "ArmorRacks_SwapWithRack_FloatMenuLabel".Translate();
+            }
+        }
+
+        public override string Desc => Label;
+
+        public override IEnumerable<FloatMenuOption> RightClickFloatMenuOptions
+        {
+            get
+            {
+                // Equip from
+                var self = this;
+                yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel".Translate(),
+                    delegate
+                    {
+                        Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
+                    });
+                
+                // Swap with
+                yield return new FloatMenuOption("ArmorRacks_SwapWithRack_FloatMenuLabel".Translate(),
+                    delegate
+                    {
+                        Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack;
+                    });
+            }
         }
 
         public override void ProcessInput(Event ev)
         {
             base.ProcessInput(ev);
             var target_info = new LocalTargetInfo(ArmorRack);
-            var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
+            var selectedJobDef = Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef;
+            var wearRackJob = new Job(selectedJobDef, target_info);
             Pawn.jobs.TryTakeOrderedJob(wearRackJob);
-        }
-    }
-    
-    public class ArmorRackSwapCommand : Command
-    {
-        public ArmorRack ArmorRack;
-        public Pawn Pawn;
-
-        public ArmorRackSwapCommand(ArmorRack armorRack, Pawn pawn)
-        {
-            defaultLabel = "ArmorRacks_SwapRackFloatMenuLabel".Translate();
-            defaultDesc = "ArmorRacks_SwapRackFloatMenuLabel".Translate();
-            ArmorRack = armorRack;
-            Pawn = pawn;
-        }
-
-        public override void ProcessInput(Event ev)
-        {
-            base.ProcessInput(ev);
-            var target_info = new LocalTargetInfo(ArmorRack);
-            var swapRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
-            Pawn.jobs.TryTakeOrderedJob(swapRackJob);
         }
     }
 }

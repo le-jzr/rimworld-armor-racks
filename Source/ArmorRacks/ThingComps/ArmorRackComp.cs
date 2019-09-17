@@ -49,7 +49,7 @@ namespace ArmorRacks.ThingComps
             if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
             {
                 // Swap with
-                var swapWithOption = new FloatMenuOption("ArmorRacks_SwapRackFloatMenuLabel".Translate(), delegate
+                var swapWithOption = new FloatMenuOption("ArmorRacks_SwapWithRack_FloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
                     var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
@@ -59,7 +59,7 @@ namespace ArmorRacks.ThingComps
             }
             else
             {
-                yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
+                yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_NonViolent".Translate(), null);
                 nonViolentOptionYielded = true;
             }
 
@@ -68,7 +68,7 @@ namespace ArmorRacks.ThingComps
                 if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
                 {
                     // Equip from
-                    var equipFromOption = new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel".Translate(), delegate
+                    var equipFromOption = new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel".Translate(), delegate
                     {
                         var target_info = new LocalTargetInfo(armorRack);
                         var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobWearRack, target_info);
@@ -78,11 +78,11 @@ namespace ArmorRacks.ThingComps
                 }
                 else if (!nonViolentOptionYielded)
                 {
-                    yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
+                    yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_NonViolent".Translate(), null);
                 }
                 
                 // Clear out
-                var clearOutOption = new FloatMenuOption("ArmorRacks_ClearRackFloatMenuLabel".Translate(), delegate
+                var clearOutOption = new FloatMenuOption("ArmorRacks_ClearRack_FloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
                     var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearRack, target_info);
@@ -91,7 +91,7 @@ namespace ArmorRacks.ThingComps
                 yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutOption, selPawn, armorRack, "ReservedBy");
             
                 // Clear out and forbid
-                var clearOutForbidOption = new FloatMenuOption("ArmorRacks_ClearForbidRackFloatMenuLabel".Translate(), delegate
+                var clearOutForbidOption = new FloatMenuOption("ArmorRacks_ClearForbidRack_FloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
                     var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearForbidRack, target_info);
@@ -101,8 +101,8 @@ namespace ArmorRacks.ThingComps
             }
             else
             {
-                yield return new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel_Empty".Translate(), null);
-                yield return new FloatMenuOption("ArmorRacks_ClearRackFloatMenuLabel_Empty".Translate(), null);
+                yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_Empty".Translate(), null);
+                yield return new FloatMenuOption("ArmorRacks_ClearRack_FloatMenuLabel_Empty".Translate(), null);
             }
             
         }
@@ -111,6 +111,13 @@ namespace ArmorRacks.ThingComps
 
     public class ArmorRackUseCommandComp : ThingComp
     {
+        public JobDef CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
+        public override void PostExposeData()
+        {
+            base.PostExposeData();
+            Scribe_Defs.Look(ref CurArmorRackJobDef, "CurArmorRackJobDef");
+        }
+
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
             if (parent is Pawn pawn)
@@ -120,8 +127,7 @@ namespace ArmorRacks.ThingComps
                 {
                     if (rack.AssignedAnything(pawn))
                     {
-                        yield return new ArmorRackWearCommand(rack, pawn);    
-                        yield return new ArmorRackSwapCommand(rack, pawn);   
+                        yield return new ArmorRackInteractCommand(rack, pawn);
                     }
                 }
             }
