@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ArmorRacks.Things;
+using ArmorRacks.Utils;
 using RimWorld;
 using Verse;
 using Verse.AI;
+using Verse.AI.Group;
 
 namespace ArmorRacks.Jobs
 {
@@ -11,6 +13,23 @@ namespace ArmorRacks.Jobs
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
+            AddFailCondition(delegate
+            {
+                var rack = (ArmorRack) TargetThingA;
+                if (!ArmorRackJobUtil.RackHasItems(rack))
+                {
+                    var text = "ArmorRacks_WearRack_JobFailMessage_Empty".Translate(pawn.LabelShort);
+                    Messages.Message(text, MessageTypeDefOf.RejectInput, false);
+                    return true;
+                }
+                if (!ArmorRackJobUtil.PawnCanEquipWeaponSet(rack, pawn))
+                {
+                    var text = "ArmorRacks_WearRack_JobFailMessage_NonViolent".Translate(pawn.LabelShort);
+                    Messages.Message(text, MessageTypeDefOf.RejectInput, false);
+                    return true;
+                }
+                return false;
+            });
             return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
         }
 

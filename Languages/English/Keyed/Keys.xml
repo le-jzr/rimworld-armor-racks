@@ -10,4 +10,12 @@
     <ArmorRacks_ArmorRackContentsTab_LabelKey>Rack</ArmorRacks_ArmorRackContentsTab_LabelKey>
     <ArmorRacks_AssignRackFloatMenuLabel>Set colonist as owner</ArmorRacks_AssignRackFloatMenuLabel>
     <ArmorRacks_AssignRackFloatMenuLabel_Owned>Set colonist as owner (Cancel ownership by {0_label})</ArmorRacks_AssignRackFloatMenuLabel_Owned>
+    
+    <ArmorRacks_WearRack_JobFailMessage_Empty>{0} cannot equip from armor rack (rack is empty)</ArmorRacks_WearRack_JobFailMessage_Empty>
+    <ArmorRacks_WearRack_JobFailMessage_NonViolent>{0} cannot equip from armor rack (rack has weapon but pawn is non-violent)</ArmorRacks_WearRack_JobFailMessage_NonViolent>
+    
+    <ArmorRacks_SwapWithRack_JobFailMessage_NonViolent>{0} cannot swap with armor rack (rack has weapon but pawn is non-violent)</ArmorRacks_SwapWithRack_JobFailMessage_NonViolent>
+    
+    <ArmorRacks_ClearRack_JobFailMessage_NonViolent>{0} cannot clear out armor rack (rack is empty)</ArmorRacks_ClearRack_JobFailMessage_NonViolent>
+    
 </LanguageData>

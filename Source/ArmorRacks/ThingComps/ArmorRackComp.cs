@@ -4,6 +4,7 @@ using System.Linq;
 using ArmorRacks.Commands;
 using ArmorRacks.DefOfs;
 using ArmorRacks.Things;
+using ArmorRacks.Utils;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -29,16 +30,6 @@ namespace ArmorRacks.ThingComps
     {
         public ArmorRackCompProperties Props => (ArmorRackCompProperties) this.props;
 
-        protected bool IsPawnAllowedWeapons(Pawn pawn)
-        {
-            return !(pawn.story.WorkTagIsDisabled(WorkTags.Violent) && ((ArmorRack) parent).GetStoredWeapon() != null);
-        }
-
-        protected bool RackHasItems()
-        {
-            return ((ArmorRack) parent).InnerContainer.Count != 0;
-        }
-
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
@@ -55,7 +46,7 @@ namespace ArmorRacks.ThingComps
             }
 
             var nonViolentOptionYielded = false;
-            if (IsPawnAllowedWeapons(selPawn))
+            if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
             {
                 // Swap with
                 var swapWithOption = new FloatMenuOption("ArmorRacks_SwapRackFloatMenuLabel".Translate(), delegate
@@ -71,21 +62,10 @@ namespace ArmorRacks.ThingComps
                 yield return new FloatMenuOption("ArmorRacks_CannotEquipNonviolent".Translate(), null);
                 nonViolentOptionYielded = true;
             }
-            
-            // Assign
-            var assignLabel = "ArmorRacks_AssignRackFloatMenuLabel".Translate();
-            if (armorRack.AssignedPawns.Count() != 0)
-            {
-                assignLabel = "ArmorRacks_AssignRackFloatMenuLabel_Owned".Translate((NamedArgument) armorRack.AssignedPawns.First());
-            }
-            yield return new FloatMenuOption(assignLabel, delegate
-            {
-                armorRack.TryAssignPawn(selPawn);
-            }); 
 
-            if (RackHasItems())
+            if (ArmorRackJobUtil.RackHasItems(armorRack))
             {
-                if (IsPawnAllowedWeapons(selPawn))
+                if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
                 {
                     // Equip from
                     var equipFromOption = new FloatMenuOption("ArmorRacks_WearRackFloatMenuLabel".Translate(), delegate
@@ -118,6 +98,25 @@ namespace ArmorRacks.ThingComps
                     selPawn.jobs.TryTakeOrderedJob(clearRackJob);
                 });
                 yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutForbidOption, selPawn, armorRack, "ReservedBy");
+                
+                // Assign
+                var assignOption = new FloatMenuOption("ArmorRacks_AssignRackFloatMenuLabel".Translate(), delegate
+                {
+                    armorRack.TryAssignPawn(selPawn);
+                });
+                if (armorRack.AssignedPawns.Count() != 0)
+                {
+                    if (!armorRack.AssignedPawns.Contains(selPawn))
+                    {
+                        assignOption.Label = "ArmorRacks_AssignRackFloatMenuLabel_Owned".Translate((NamedArgument) armorRack.AssignedPawns.First());
+                        yield return assignOption;
+                    }
+                }
+                else
+                {
+                    yield return assignOption;
+                }
+
             }
             else
             {
@@ -141,7 +140,6 @@ namespace ArmorRacks.ThingComps
                 var racksComp = pawn.GetComp<ArmorRackPawnOwnershipComp>();
                 foreach (ArmorRack armorRack in racksComp.assignedArmorRacks)
                 {
-                    // TODO validation
                     yield return new ArmorRackWearCommand(armorRack, pawn);    
                     yield return new ArmorRackSwapCommand(armorRack, pawn);    
                 }

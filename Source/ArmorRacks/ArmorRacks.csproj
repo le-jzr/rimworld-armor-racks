@@ -57,6 +57,7 @@
     <Compile Include="Drawers\ArmorRackContentsDrawer.cs" />
     <Compile Include="ThingComps\ArmorRackComp.cs" />
     <Compile Include="Things\ArmorRack.cs" />
+    <Compile Include="Utils\ArmorRackJobUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
