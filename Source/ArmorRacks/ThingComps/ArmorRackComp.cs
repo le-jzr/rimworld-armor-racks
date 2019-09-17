@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using ArmorRacks.Commands;
 using ArmorRacks.DefOfs;
 using ArmorRacks.Things;
 using RimWorld;
@@ -70,6 +72,17 @@ namespace ArmorRacks.ThingComps
                 nonViolentOptionYielded = true;
             }
             
+            // Assign
+            var assignLabel = "ArmorRacks_AssignRackFloatMenuLabel".Translate();
+            if (armorRack.AssignedPawns.Count() != 0)
+            {
+                assignLabel = "ArmorRacks_AssignRackFloatMenuLabel_Owned".Translate((NamedArgument) armorRack.AssignedPawns.First());
+            }
+            yield return new FloatMenuOption(assignLabel, delegate
+            {
+                armorRack.TryAssignPawn(selPawn);
+            }); 
+
             if (RackHasItems())
             {
                 if (IsPawnAllowedWeapons(selPawn))
@@ -113,4 +126,27 @@ namespace ArmorRacks.ThingComps
             }
         }
     }
+
+    public class ArmorRackPawnOwnershipComp : ThingComp
+    {
+        public List<ArmorRack> assignedArmorRacks = new List<ArmorRack>();
+    }
+
+    public class ArmorRackUseCommandComp : ThingComp
+    {
+        public override IEnumerable<Gizmo> CompGetGizmosExtra()
+        {
+            if (this.parent is Pawn pawn)
+            {
+                var racksComp = pawn.GetComp<ArmorRackPawnOwnershipComp>();
+                foreach (ArmorRack armorRack in racksComp.assignedArmorRacks)
+                {
+                    // TODO validation
+                    yield return new ArmorRackWearCommand(armorRack, pawn);    
+                    yield return new ArmorRackSwapCommand(armorRack, pawn);    
+                }
+            }
+        }
+    }
+
 }

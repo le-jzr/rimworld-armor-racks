@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using ArmorRacks.Drawers;
+using ArmorRacks.ThingComps;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -40,7 +42,7 @@ namespace ArmorRacks.Things
         }
     }
     
-    public class ArmorRack : Building, IHaulDestination, IThingHolder
+    public class ArmorRack : Building, IAssignableBuilding, IHaulDestination, IThingHolder
     {
         public StorageSettings Settings;
         public ArmorRackInnerContainer InnerContainer;
@@ -48,6 +50,7 @@ namespace ArmorRacks.Things
         public BodyDef BodyDef => BodyDefOf.Human;
         public BodyTypeDef BodyTypeDef => BodyTypeDefOf.Male;
         public bool StorageTabVisible => true;
+        private List<Pawn> assignedPawns = new List<Pawn>();
 
         public ArmorRack()
         {
@@ -182,6 +185,53 @@ namespace ArmorRacks.Things
         public virtual void ContentsChanged(Thing thing)
         {
             ContentsDrawer.ResolveApparelGraphics();
+        }
+        
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            UnassignAll();
+            base.DeSpawn(mode);
+        }
+
+        public IEnumerable<Pawn> AssigningCandidates
+        {
+            get
+            {
+                if (!this.Spawned)
+                    return Enumerable.Empty<Pawn>();
+                return this.Map.mapPawns.FreeColonists;
+            }
+        }
+
+        public IEnumerable<Pawn> AssignedPawns => assignedPawns;
+
+        public int MaxAssignedPawnsCount => 1;
+
+        public void TryAssignPawn(Pawn pawn)
+        {
+            UnassignAll();
+            assignedPawns.Add(pawn);
+            pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Add(this);
+        }
+
+        public void TryUnassignPawn(Pawn pawn)
+        {
+            assignedPawns.Remove(pawn);
+            pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Remove(this);
+        }
+        
+
+        public void UnassignAll()
+        {
+            foreach (var assignedPawn in assignedPawns.ToList())
+            {
+                TryUnassignPawn(assignedPawn);
+            }
+        }
+        
+        public bool AssignedAnything(Pawn pawn)
+        {
+            return pawn.GetComp<ArmorRackPawnOwnershipComp>().assignedArmorRacks.Count > 0;
         }
     }
 }

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+    <Operation Class="PatchOperationConditional">
+        <xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
+        <nomatch Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Human"]</xpath>
+            <value>
+                <comps>
+                    <li>
+                        <compClass>ArmorRacks.ThingComps.ArmorRackPawnOwnershipComp</compClass>
+                    </li>
+                </comps>
+            </value>
+        </nomatch>
+        <match Class="PatchOperationAdd">
+            <xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
+            <value>
+                <li>
+                    <compClass>ArmorRacks.ThingComps.ArmorRackPawnOwnershipComp</compClass>
+                </li>
+            </value>
+        </match>
+    </Operation>
+
+    <Operation Class="PatchOperationAdd">
+        <xpath>/Defs/ThingDef[defName="Human"]/comps</xpath>
+        <value>
+            <li><compClass>ArmorRacks.ThingComps.ArmorRackUseCommandComp</compClass></li>
+        </value>
+    </Operation>
+    
+</Patch>

@@ -58,5 +58,6 @@
                 <compClass>CompForbiddable</compClass>
             </li>
         </comps>
+        <drawGUIOverlay>True</drawGUIOverlay>
     </ThingDef>
 </Defs>

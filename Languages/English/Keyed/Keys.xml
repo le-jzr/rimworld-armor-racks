@@ -8,4 +8,6 @@
     <ArmorRacks_ClearRackFloatMenuLabel_Empty>Cannot clear out rack (empty)</ArmorRacks_ClearRackFloatMenuLabel_Empty>
     <ArmorRacks_ClearForbidRackFloatMenuLabel>Clear out and forbid armor rack</ArmorRacks_ClearForbidRackFloatMenuLabel>
     <ArmorRacks_ArmorRackContentsTab_LabelKey>Rack</ArmorRacks_ArmorRackContentsTab_LabelKey>
+    <ArmorRacks_AssignRackFloatMenuLabel>Set colonist as owner</ArmorRacks_AssignRackFloatMenuLabel>
+    <ArmorRacks_AssignRackFloatMenuLabel_Owned>Set colonist as owner (Cancel ownership by {0_label})</ArmorRacks_AssignRackFloatMenuLabel_Owned>
 </LanguageData>

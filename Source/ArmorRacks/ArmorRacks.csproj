@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\ArmorRackUseCommand.cs" />
     <Compile Include="DefOfs\JobDefOf.cs" />
     <Compile Include="ITabs\ITab_ArmorRackStorage.cs" />
     <Compile Include="Jobs\JobDriver_ClearForbidRack.cs" />

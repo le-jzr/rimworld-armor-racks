@@ -21,6 +21,10 @@ namespace ArmorRacks.Drawers
 
         public void DrawAt(Vector3 drawLoc)
         {
+            if (ApparelGraphics.Count == 0)
+            {
+                ResolveApparelGraphics();
+            }
             DrawApparel(drawLoc);
             DrawWeapon(drawLoc);
         }
@@ -124,6 +128,7 @@ namespace ArmorRacks.Drawers
 
         public void ResolveApparelGraphics()
         {
+            Log.Warning("resolving");
             ApparelGraphics.Clear();
             var apparelList = ArmorRack.GetStoredApparel().ToList();
             apparelList.Sort(((a, b) => a.def.apparel.LastLayer.drawOrder.CompareTo(b.def.apparel.LastLayer.drawOrder)));
