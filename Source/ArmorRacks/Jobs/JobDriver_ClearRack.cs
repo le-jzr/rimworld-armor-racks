@@ -9,14 +9,16 @@ namespace ArmorRacks.Jobs
 {
     public class JobDriverClearRack : JobDriver
     {
+        public bool ForbidAfter = false;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
+            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
             AddFailCondition(delegate
             {
                 var rack = (ArmorRack) TargetThingA;
                 if (!ArmorRackJobUtil.RackHasItems(rack))
                 {
-                    var text = "ArmorRacks_ClearRack_JobFailMessage_NonViolent".Translate(pawn.LabelShort);
+                    var text = "ArmorRacks_ClearRack_FloatMenuLabel_Empty".Translate(pawn.LabelShort);
                     Messages.Message(text, MessageTypeDefOf.RejectInput, false);
                     return true;
                 }
@@ -25,13 +27,9 @@ namespace ArmorRacks.Jobs
             return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
         }
 
-        protected override IEnumerable<Toil> MakeNewToils()
+        public virtual Toil GetDropToil()
         {
-            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
-            yield return Toils_Reserve.Reserve(TargetIndex.A);
-            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
-            yield return Toils_General.WaitWith(TargetIndex.A, 100, true);
-            yield return new Toil()
+            return new Toil()
             {
                 initAction = delegate
                 {
@@ -39,6 +37,14 @@ namespace ArmorRacks.Jobs
                     armorRack.DropContents();
                 }
             };
+        }
+
+        protected override IEnumerable<Toil> MakeNewToils()
+        {
+            yield return Toils_Reserve.Reserve(TargetIndex.A);
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
+            yield return Toils_General.WaitWith(TargetIndex.A, 100, true);
+            yield return GetDropToil();
         }
     }
 }

@@ -8,13 +8,17 @@ namespace ArmorRacks.Jobs
 {
     public class JobDriverClearForbidRack : JobDriverClearRack
     {
-        protected override IEnumerable<Toil> MakeNewToils()
+        public override Toil GetDropToil()
         {
-            foreach (var toil in base.MakeNewToils())
+            return new Toil()
             {
-                yield return toil;
-            }
-            yield return Toils_Misc.SetForbidden(TargetIndex.A, true);
+                initAction = delegate
+                {
+                    var armorRack = TargetThingA as ArmorRack;
+                    ForbidUtility.SetForbidden(armorRack, true);
+                    armorRack.DropContents();
+                }
+            };
         }
     }
 }
