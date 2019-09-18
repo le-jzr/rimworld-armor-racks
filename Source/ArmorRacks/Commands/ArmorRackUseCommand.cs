@@ -2,9 +2,11 @@
 using ArmorRacks.DefOfs;
 using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
+using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.AI;
+using Verse.Sound;
 
 namespace ArmorRacks.Commands
 {
@@ -17,6 +19,8 @@ namespace ArmorRacks.Commands
         {
             ArmorRack = armorRack;
             Pawn = pawn;
+            icon = ContentFinder<Texture2D>.Get(armorRack.def.graphicData.texPath + "_south", false);
+            defaultIconColor = armorRack.Stuff.stuffProps.color;
         }
 
         public override string Label
