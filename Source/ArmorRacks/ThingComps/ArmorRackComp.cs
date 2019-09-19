@@ -30,6 +30,11 @@ namespace ArmorRacks.ThingComps
     {
         public ArmorRackCompProperties Props => (ArmorRackCompProperties) this.props;
 
+        public override void PostDraw()
+        {
+            return;
+        }
+
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;

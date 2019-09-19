@@ -59,4 +59,66 @@
         </comps>
         <drawGUIOverlay>True</drawGUIOverlay>
     </ThingDef>
+
+
+    <ThingDef ParentName="BuildingBase">
+        <defName>ArmorRacks_MechanizedArmorRack</defName>
+        <label>mechanized armor rack</label>
+        <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating. Mechanized for extra equipping efficiency.</description>
+        <thingClass>ArmorRacks.Things.MechanizedArmorRack</thingClass>
+        <graphicData>
+            <texPath>ArmorRacks_MechanizedArmorRack</texPath>
+            <graphicClass>Graphic_Multi</graphicClass>
+            <drawSize>(1,2)</drawSize>
+        </graphicData>
+        <altitudeLayer>Building</altitudeLayer>
+        <useHitPoints>True</useHitPoints>
+        <statBases>
+            <MaxHitPoints>180</MaxHitPoints>
+            <Flammability>1.0</Flammability>
+            <WorkToBuild>1000</WorkToBuild>
+            <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
+            <Cleanliness>-5</Cleanliness>
+        </statBases>
+        <size>(1,2)</size>
+        <designationCategory>Furniture</designationCategory>
+        <hasInteractionCell>True</hasInteractionCell>
+        <interactionCellOffset>(0,0,2)</interactionCellOffset>
+        <passability>PassThroughOnly</passability>
+        <pathCost>70</pathCost>
+        <costStuffCount>40</costStuffCount>
+        <stuffCategories>
+            <li>Metallic</li>
+        </stuffCategories>
+        <inspectorTabs>
+            <li>ITab_Storage</li>
+            <li>ArmorRacks.ITabs.ITabArmorRackContents</li>
+        </inspectorTabs>
+        <defaultPlacingRot>South</defaultPlacingRot>
+        <building>
+            <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+            <ignoreStoredThingsBeauty>false</ignoreStoredThingsBeauty>
+            <defaultStorageSettings>
+                <priority>Important</priority>
+                <filter>
+                    <categories>
+                        <li>Apparel</li>
+                        <li>Weapons</li>
+                    </categories>
+                </filter>
+            </defaultStorageSettings>
+        </building>
+        <surfaceType>Item</surfaceType>
+        <researchPrerequisites>
+            <li>ComplexFurniture</li>
+        </researchPrerequisites>
+        <comps>
+            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties" />
+            <li>
+                <compClass>CompForbiddable</compClass>
+            </li>
+        </comps>
+        <drawGUIOverlay>True</drawGUIOverlay>
+    </ThingDef>
+    
 </Defs>

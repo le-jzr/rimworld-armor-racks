@@ -20,7 +20,7 @@ namespace ArmorRacks.Drawers
             ApparelGraphics = new List<ApparelGraphicRecord>();
         }
 
-        public void DrawAt(Vector3 drawLoc)
+        public virtual void DrawAt(Vector3 drawLoc)
         {
             if (!IsApparelResolved)
             {
