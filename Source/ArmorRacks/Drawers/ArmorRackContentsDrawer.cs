@@ -31,8 +31,8 @@ namespace ArmorRacks.Drawers
         }
 
         public void DrawApparel(Vector3 drawLoc)
-        {
-            const float angle = 0.0f;
+        { 
+            float angle = 0.0f;
             Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
             Vector3 vector3_1 = drawLoc;
             Vector3 vector3_2 = drawLoc;
@@ -50,7 +50,21 @@ namespace ArmorRacks.Drawers
             Vector3 vector3_3 = quaternion * BaseHeadOffsetAt(ArmorRack.Rotation);
             Vector3 loc1 = drawLoc + vector3_3;
             loc1.y += 1f / 32f;
+            
+            Vector3 loc = drawLoc;
+            loc.y += 1f / 32f;
             Mesh mesh = new GraphicMeshSet(1.5f).MeshAt(ArmorRack.Rotation);
+            
+            for (int index = 0; index < ApparelGraphics.Count; ++index)
+            {
+                if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer != ApparelLayerDefOf.Shell &&
+                    ApparelGraphics[index].sourceApparel.def.apparel.LastLayer != ApparelLayerDefOf.Overhead)
+                {
+                    Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
+                    GenDraw.DrawMeshNowOrLater(mesh, loc, quaternion, mat, false);
+                    loc.y += 1f / 32f;
+                }
+            }
 
             for (int index = 0; index < ApparelGraphics.Count; ++index)
             {
@@ -69,16 +83,11 @@ namespace ArmorRacks.Drawers
                         GenDraw.DrawMeshNowOrLater(mesh, loc2, quaternion, mat, false);
                     }
                 }
-                else
+                else if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer == ApparelLayerDefOf.Shell)
                 {
                     Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
-                    GenDraw.DrawMeshNowOrLater(mesh, vector3_1, quaternion, mat, false);
+                    GenDraw.DrawMeshNowOrLater(mesh, loc, quaternion, mat, false);
                 }
-            }
-
-            foreach (Apparel apparel in ArmorRack.GetStoredApparel())
-            {
-                apparel.DrawWornExtras();
             }
         }
 
@@ -129,7 +138,6 @@ namespace ArmorRacks.Drawers
 
         public void ResolveApparelGraphics()
         {
-            Log.Warning("resolving");
             ApparelGraphics.Clear();
             var apparelList = ArmorRack.GetStoredApparel().ToList();
             apparelList.Sort(((a, b) => a.def.apparel.LastLayer.drawOrder.CompareTo(b.def.apparel.LastLayer.drawOrder)));
@@ -137,10 +145,14 @@ namespace ArmorRacks.Drawers
             {
                 ApparelGraphicRecord rec;
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
+                {
                     ApparelGraphics.Add(rec);
+                    
+                }
             }
             IsApparelResolved = true;
         }
+        
 
         public Vector3 BaseHeadOffsetAt(Rot4 rotation)
         {
