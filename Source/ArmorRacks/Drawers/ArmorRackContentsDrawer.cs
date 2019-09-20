@@ -46,11 +46,7 @@ namespace ArmorRacks.Drawers
                 vector3_2.y += 3f / 128f;
                 vector3_1.y += 7f / 256f;
             }
-
             Vector3 vector3_3 = quaternion * BaseHeadOffsetAt(ArmorRack.Rotation);
-            Vector3 loc1 = drawLoc + vector3_3;
-            loc1.y += 1f / 32f;
-            
             Vector3 loc = drawLoc;
             loc.y += 1f / 32f;
             Mesh mesh = new GraphicMeshSet(1.5f).MeshAt(ArmorRack.Rotation);
@@ -65,6 +61,10 @@ namespace ArmorRacks.Drawers
                     loc.y += 1f / 32f;
                 }
             }
+            
+            Vector3 loc1 = loc + vector3_3;
+            Vector3 loc2 = loc + vector3_3;
+            loc1.y += 1f / 32f;
 
             for (int index = 0; index < ApparelGraphics.Count; ++index)
             {
@@ -78,7 +78,6 @@ namespace ArmorRacks.Drawers
                     else
                     {
                         Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
-                        Vector3 loc2 = drawLoc + vector3_3;
                         loc2.y += !(ArmorRack.Rotation == Rot4.North) ? 9f / 256f : 1f / 256f;
                         GenDraw.DrawMeshNowOrLater(mesh, loc2, quaternion, mat, false);
                     }
@@ -104,10 +103,10 @@ namespace ArmorRacks.Drawers
             float angle = -90f;
             if (ArmorRack.Rotation == Rot4.South)
             {
-                weaponDrawLoc += new Vector3(0.0f, 0.0f, 0.0f);
-                weaponDrawLoc.y += 5f / 128f;
+                weaponDrawLoc += new Vector3(0.0f, 2.0f, -0.1f);
+                weaponDrawLoc.y += 1f;
                 weaponMesh = MeshPool.plane10;
-                angle = -45f;
+                angle = -25f;
             }
             else if (ArmorRack.Rotation == Rot4.North)
             {
@@ -117,16 +116,17 @@ namespace ArmorRacks.Drawers
             }
             else if (ArmorRack.Rotation == Rot4.East)
             {
-                weaponDrawLoc += new Vector3(0.3f, 0.0f, -0.22f);
+                weaponDrawLoc += new Vector3(0.2f, 2.0f, -0.12f);
                 weaponDrawLoc.y += 5f / 128f;
                 weaponMesh = MeshPool.plane10;
+                angle = 25f;
             }
             else
             {
-                weaponDrawLoc += new Vector3(-0.3f, 0.0f, -0.22f);
+                weaponDrawLoc += new Vector3(-0.2f, 2.0f, -0.12f);
                 weaponDrawLoc.y += 5f / 128f;
                 weaponMesh = MeshPool.plane10Flip;
-                angle = 90f;
+                angle = -25f;
             }
 
             Graphic_StackCount graphic = storedWeapon.Graphic as Graphic_StackCount;
@@ -146,8 +146,8 @@ namespace ArmorRacks.Drawers
                 ApparelGraphicRecord rec;
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
                 {
+                    Log.Warning(apparel + " " + apparel.def.apparel.LastLayer.ToString() + " " + apparel.def.apparel.LastLayer.drawOrder.ToString());
                     ApparelGraphics.Add(rec);
-                    
                 }
             }
             IsApparelResolved = true;

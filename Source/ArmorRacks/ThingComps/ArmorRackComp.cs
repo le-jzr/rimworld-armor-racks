@@ -30,11 +30,6 @@ namespace ArmorRacks.ThingComps
     {
         public ArmorRackCompProperties Props => (ArmorRackCompProperties) this.props;
 
-        public override void PostDraw()
-        {
-            return;
-        }
-
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
@@ -110,32 +105,6 @@ namespace ArmorRacks.ThingComps
                 yield return new FloatMenuOption("ArmorRacks_ClearRack_FloatMenuLabel_Empty".Translate(), null);
             }
             
-        }
-    }
-    
-
-    public class ArmorRackUseCommandComp : ThingComp
-    {
-        public JobDef CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
-        public override void PostExposeData()
-        {
-            base.PostExposeData();
-            Scribe_Defs.Look(ref CurArmorRackJobDef, "CurArmorRackJobDef");
-        }
-
-        public override IEnumerable<Gizmo> CompGetGizmosExtra()
-        {
-            if (parent is Pawn pawn)
-            {
-                var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
-                foreach (var rack in racks)
-                {
-                    if (rack.AssignedAnything(pawn))
-                    {
-                        yield return new ArmorRackInteractCommand(rack, pawn);
-                    }
-                }
-            }
         }
     }
 

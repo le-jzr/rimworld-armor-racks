@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <ThingDef ParentName="BuildingBase" Abstract="True" Name="ArmorRacks_BaseArmorRack">
+        <altitudeLayer>Building</altitudeLayer>
+        <useHitPoints>True</useHitPoints>
+        <designationCategory>Furniture</designationCategory>
+        <passability>PassThroughOnly</passability>
+        <pathCost>70</pathCost>
+        <inspectorTabs>
+            <li>ITab_Storage</li>
+            <li>ArmorRacks.ITabs.ITabArmorRackContents</li>
+        </inspectorTabs>
+        <defaultPlacingRot>South</defaultPlacingRot>
+        <building>
+            <preventDeteriorationOnTop>true</preventDeteriorationOnTop>
+            <ignoreStoredThingsBeauty>false</ignoreStoredThingsBeauty>
+            <defaultStorageSettings>
+                <priority>Important</priority>
+            </defaultStorageSettings>
+            <fixedStorageSettings>
+                <filter>
+                    <categories>
+                        <li>Apparel</li>
+                        <li>Weapons</li>
+                    </categories>
+                </filter>
+            </fixedStorageSettings>
+        </building>
+        <surfaceType>Item</surfaceType>
+        <drawGUIOverlay>True</drawGUIOverlay>
+    </ThingDef>
+
+</Defs>

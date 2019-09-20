@@ -10,12 +10,12 @@ using Verse.Sound;
 
 namespace ArmorRacks.Commands
 {
-    public class ArmorRackInteractCommand : Command
+    public class ArmorRackUseCommand : Command
     {
         public ArmorRack ArmorRack;
         public Pawn Pawn;
 
-        public ArmorRackInteractCommand(ArmorRack armorRack, Pawn pawn)
+        public ArmorRackUseCommand(ArmorRack armorRack, Pawn pawn)
         {
             ArmorRack = armorRack;
             Pawn = pawn;

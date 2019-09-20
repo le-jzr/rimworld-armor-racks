@@ -122,7 +122,6 @@ namespace ArmorRacks.Things
                     return false;
                 }
             }
-
             return true;
         }
 
@@ -137,7 +136,6 @@ namespace ArmorRacks.Things
                     result.Add((Apparel) storedThing);
                 }
             }
-
             return result;
         }
 
@@ -186,7 +184,6 @@ namespace ArmorRacks.Things
 
         public virtual void ContentsChanged(Thing thing)
         {
-            Log.Warning("Content changed");
             ContentsDrawer.IsApparelResolved = false;
         }
         
