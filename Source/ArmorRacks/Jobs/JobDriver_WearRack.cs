@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using ArmorRacks.Utils;
 using RimWorld;
@@ -9,7 +10,7 @@ using Verse.AI.Group;
 
 namespace ArmorRacks.Jobs
 {
-    public class JobDriverWearRack : JobDriver
+    public class JobDriverWearRack : JobDriver_WearRackBase
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -39,7 +40,7 @@ namespace ArmorRacks.Jobs
             yield return Toils_Reserve.Reserve(TargetIndex.A);
             var destination = TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch;
             yield return Toils_Goto.GotoThing(TargetIndex.A, destination);
-            yield return Toils_General.WaitWith(TargetIndex.A, 100, true);
+            yield return Toils_General.WaitWith(TargetIndex.A, WaitTicks, true);
             yield return new Toil()
             {
                 initAction = delegate

@@ -13,7 +13,7 @@ namespace ArmorRacks.ThingComps
 {
     public class ArmorRackCompProperties : CompProperties
     {
-        public bool myExampleBool;
+        public float equipDelayFactor;
 
         public ArmorRackCompProperties()
         {

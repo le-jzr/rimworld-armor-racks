@@ -8,7 +8,7 @@ using Verse.AI;
 
 namespace ArmorRacks.Jobs
 {
-    public class JobDriverSwapWithRack : JobDriver
+    public class JobDriverSwapWithRack : JobDriver_WearRackBase
     {
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
@@ -32,7 +32,7 @@ namespace ArmorRacks.Jobs
             yield return Toils_Reserve.Reserve(TargetIndex.A);
             var destination = TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch;
             yield return Toils_Goto.GotoThing(TargetIndex.A, destination);
-            yield return Toils_General.WaitWith(TargetIndex.A, 100, true);
+            yield return Toils_General.WaitWith(TargetIndex.A, WaitTicks, true);
             yield return new Toil()
             {
                 initAction = delegate

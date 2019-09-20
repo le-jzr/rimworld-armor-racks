@@ -54,6 +54,7 @@
     <Compile Include="Jobs\JobDriver_ClearRack.cs" />
     <Compile Include="Jobs\JobDriver_SwapWithRack.cs" />
     <Compile Include="Jobs\JobDriver_WearRack.cs" />
+    <Compile Include="Jobs\JobDriver_WearRackBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Drawers\ArmorRackContentsDrawer.cs" />
     <Compile Include="ThingComps\ArmorRackComp.cs" />
