@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
@@ -45,18 +46,54 @@ namespace ArmorRacks.Jobs
                 initAction = delegate
                 {
                     var armorRack = TargetThingA as ArmorRack;
-                    foreach (Apparel rackApparel in armorRack.GetStoredApparel())
+                    var storedRackApparel = new List<Apparel>(armorRack.GetStoredApparel());
+                    var storedRackWeapon = armorRack.GetStoredWeapon();
+                    var storedPawnWeapon = pawn.equipment.Primary;
+                    armorRack.InnerContainer.Clear();
+                    
+                    foreach (Apparel rackApparel in storedRackApparel)
                     {
-                        armorRack.InnerContainer.Remove(rackApparel);
-                        pawn.apparel.Wear(rackApparel, true);
+                        if (!ApparelUtility.HasPartsToWear(pawn, rackApparel.def))
+                        {
+                            Thing lastRemovedThing = null;
+                            armorRack.InnerContainer.TryDrop(rackApparel, ThingPlaceMode.Near, out lastRemovedThing);
+                            continue;
+                        }
+                        if (!pawn.apparel.CanWearWithoutDroppingAnything(rackApparel.def))
+                        {
+                            var storedPawnApparel = new List<Apparel>(pawn.apparel.WornApparel);
+                            foreach (var pawnApparel in storedPawnApparel)
+                            {
+                                if (!ApparelUtility.CanWearTogether(rackApparel.def, pawnApparel.def, armorRack.BodyDef))
+                                {
+                                    pawn.apparel.Remove(pawnApparel);
+                                    armorRack.InnerContainer.TryAdd(pawnApparel);
+                                }
+                            }
+                        }
+                        pawn.apparel.Wear(rackApparel);
                     }
-
-                    ThingWithComps rackWeapon = (ThingWithComps)armorRack.GetStoredWeapon();
-                    if (rackWeapon != null)
+                    
+                    int hasRackWeapon = storedRackWeapon == null ? 0x00 : 0x01;
+                    int hasPawnWeapon = storedPawnWeapon == null ? 0x00 : 0x10;
+                    switch (hasRackWeapon | hasPawnWeapon)
                     {
-                        armorRack.InnerContainer.Remove(rackWeapon);
-                        pawn.equipment.MakeRoomFor(rackWeapon);
-                        pawn.equipment.AddEquipment(rackWeapon);   
+                        case 0x11:
+                        {
+                            pawn.equipment.Remove(storedPawnWeapon);
+                            armorRack.InnerContainer.TryAdd(storedPawnWeapon);
+                            pawn.equipment.MakeRoomFor((ThingWithComps)storedRackWeapon);
+                            pawn.equipment.AddEquipment((ThingWithComps)storedRackWeapon);
+                            break;
+                        }
+                        case 0x01:
+                            pawn.equipment.MakeRoomFor((ThingWithComps)storedRackWeapon);
+                            pawn.equipment.AddEquipment((ThingWithComps)storedRackWeapon);
+                            break;
+                        case 0x10:
+                        {
+                            break;
+                        }
                     }
                 }
             };

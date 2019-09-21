@@ -33,7 +33,7 @@ namespace ArmorRacks.Commands
                     return "ArmorRacks_WearRack_FloatMenuLabel".Translate();
                 }
 
-                return "ArmorRacks_SwapWithRack_FloatMenuLabel".Translate();
+                return "ArmorRacks_TransferToRack_FloatMenuLabel".Translate();
             }
         }
 
@@ -51,11 +51,11 @@ namespace ArmorRacks.Commands
                         Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
                     });
                 
-                // Swap with
-                yield return new FloatMenuOption("ArmorRacks_SwapWithRack_FloatMenuLabel".Translate(),
+                // Transfer to
+                yield return new FloatMenuOption("ArmorRacks_TransferToRack_FloatMenuLabel".Translate(),
                     delegate
                     {
-                        Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack;
+                        Pawn.GetComp<ArmorRackUseCommandComp>().CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobTransferToRack;
                     });
             }
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using ArmorRacks.Drawers;
@@ -80,6 +81,7 @@ namespace ArmorRacks.Things
         public bool Accepts(Thing t)
         {
             bool result = Settings.AllowedToAccept(t);
+            Log.Warning(result.ToString()+ " " + t.ToString() + " " + t.def.ToString() + " " + t.def.IsWeapon.ToString());
             if (result)
             {
                 if (t.def.IsWeapon)
@@ -97,6 +99,7 @@ namespace ArmorRacks.Things
         public bool CanStoreWeapon(Thing weapon)
         {
             Thing storedWeapon = GetStoredWeapon();
+            Log.Warning(weapon.ToString());
             return storedWeapon == null;
         }
 

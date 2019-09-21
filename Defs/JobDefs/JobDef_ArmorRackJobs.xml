@@ -22,9 +22,9 @@
     </JobDef>
 
     <JobDef>
-        <defName>ArmorRacks_JobSwapWithRack</defName>
-        <driverClass>ArmorRacks.Jobs.JobDriverSwapWithRack</driverClass>
-        <reportString>Swapping equipment with armor rack.</reportString>
+        <defName>ArmorRacks_JobTransferToRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriverTransferToRack</driverClass>
+        <reportString>Transferring equipment to armor rack.</reportString>
         <suspendable>false</suspendable>
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>

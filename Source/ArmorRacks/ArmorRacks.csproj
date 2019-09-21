@@ -53,7 +53,7 @@
     <Compile Include="Jobs\JobDriver_BaseRackJob.cs" />
     <Compile Include="Jobs\JobDriver_ClearForbidRack.cs" />
     <Compile Include="Jobs\JobDriver_ClearRack.cs" />
-    <Compile Include="Jobs\JobDriver_SwapWithRack.cs" />
+    <Compile Include="Jobs\JobDriver_TransferToRack.cs" />
     <Compile Include="Jobs\JobDriver_WearRack.cs" />
     <Compile Include="Jobs\JobDriver_WearRackBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

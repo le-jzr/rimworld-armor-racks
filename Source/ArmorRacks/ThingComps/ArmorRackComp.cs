@@ -49,11 +49,11 @@ namespace ArmorRacks.ThingComps
             var nonViolentOptionYielded = false;
             if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
             {
-                // Swap with
-                var swapWithOption = new FloatMenuOption("ArmorRacks_SwapWithRack_FloatMenuLabel".Translate(), delegate
+                // Transfer to
+                var swapWithOption = new FloatMenuOption("ArmorRacks_TransferToRack_FloatMenuLabel".Translate(), delegate
                 {
                     var target_info = new LocalTargetInfo(armorRack);
-                    var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobSwapWithRack, target_info);
+                    var wearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobTransferToRack, target_info);
                     selPawn.jobs.TryTakeOrderedJob(wearRackJob);
                 });
                 yield return FloatMenuUtility.DecoratePrioritizedTask(swapWithOption, selPawn, armorRack, "ReservedBy");
