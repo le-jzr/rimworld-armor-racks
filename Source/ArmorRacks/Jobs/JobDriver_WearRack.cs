@@ -31,16 +31,15 @@ namespace ArmorRacks.Jobs
                 }
                 return false;
             });
-            return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
+            return base.TryMakePreToilReservations(errorOnFailed);
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
-            yield return Toils_Reserve.Reserve(TargetIndex.A);
-            var destination = TargetThingA.def.hasInteractionCell ? PathEndMode.InteractionCell : PathEndMode.Touch;
-            yield return Toils_Goto.GotoThing(TargetIndex.A, destination);
-            yield return Toils_General.WaitWith(TargetIndex.A, WaitTicks, true);
+            foreach (var toil in base.MakeNewToils())
+            {
+                yield return toil;
+            }
             yield return new Toil()
             {
                 initAction = delegate

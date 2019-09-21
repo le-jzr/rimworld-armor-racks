@@ -35,12 +35,11 @@
         </researchPrerequisites>
         <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
         <comps>
-            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
-                <equipDelayFactor>0.2</equipDelayFactor>
+            <li Class="CompProperties_Power">
+                <compClass>CompPowerTrader</compClass>
+                <basePowerConsumption>100</basePowerConsumption>
             </li>
-            <li>
-                <compClass>CompForbiddable</compClass>
-            </li>
+            <li Class="CompProperties_Flickable"/>
         </comps>
     </ThingDef>
 </Defs>

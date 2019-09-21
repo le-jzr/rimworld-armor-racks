@@ -1,14 +1,12 @@
 ﻿using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using RimWorld;
-using Verse;
-using Verse.AI;
 
 namespace ArmorRacks.Jobs
 {
-    public abstract class JobDriver_WearRackBase: JobDriver
+    public abstract class JobDriver_WearRackBase : JobDriver_BaseRackJob
     {
-        public int WaitTicks
+        public override int WaitTicks
         {
             get
             {
@@ -22,12 +20,13 @@ namespace ArmorRacks.Jobs
                     var equipDelay = apparel.GetStatValue(StatDefOf.EquipDelay);
                     totalEquipDelay += equipDelay;
                 }
-                float equipDelayFactor = armorRack.GetComp<ArmorRackComp>().Props.equipDelayFactor;
+
+                var armorRackProps = armorRack.GetComp<ArmorRackComp>().Props;
+                var powerOn = armorRack.GetComp<CompPowerTrader>().PowerOn;
+                float equipDelayFactor = powerOn ? armorRackProps.equipDelayFactorPowered : armorRackProps.equipDelayFactor;
                 var waitTicks = totalEquipDelay * equipDelayFactor * 60f;
-                Log.Warning(waitTicks.ToString());
-                return (int)waitTicks;
+                return (int) waitTicks;
             }
-            
         }
     }
 }

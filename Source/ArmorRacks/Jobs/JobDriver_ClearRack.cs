@@ -7,12 +7,11 @@ using Verse.AI;
 
 namespace ArmorRacks.Jobs
 {
-    public class JobDriverClearRack : JobDriver
+    public class JobDriverClearRack : JobDriver_BaseRackJob
     {
         public bool ForbidAfter = false;
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
             AddFailCondition(delegate
             {
                 var rack = (ArmorRack) TargetThingA;
@@ -24,19 +23,22 @@ namespace ArmorRacks.Jobs
                 }
                 return false;
             });
-            return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
+            return base.TryMakePreToilReservations(errorOnFailed);
         }
 
-        public virtual Toil GetDropToil()
+        public virtual Toil DropToil
         {
-            return new Toil()
+            get
             {
-                initAction = delegate
+                return new Toil()
                 {
-                    var armorRack = TargetThingA as ArmorRack;
-                    armorRack.DropContents();
-                }
-            };
+                    initAction = delegate
+                    {
+                        var armorRack = TargetThingA as ArmorRack;
+                        armorRack.DropContents();
+                    }
+                };
+            }
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -44,7 +46,7 @@ namespace ArmorRacks.Jobs
             yield return Toils_Reserve.Reserve(TargetIndex.A);
             yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.Touch);
             yield return Toils_General.WaitWith(TargetIndex.A, 100, true);
-            yield return GetDropToil();
+            yield return DropToil;
         }
     }
 }

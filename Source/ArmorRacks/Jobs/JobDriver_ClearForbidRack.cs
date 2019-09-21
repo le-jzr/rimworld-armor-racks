@@ -1,24 +1,25 @@
-﻿using System.Collections.Generic;
-using ArmorRacks.Things;
+﻿using ArmorRacks.Things;
 using RimWorld;
-using Verse;
 using Verse.AI;
 
 namespace ArmorRacks.Jobs
 {
     public class JobDriverClearForbidRack : JobDriverClearRack
     {
-        public override Toil GetDropToil()
+        public override Toil DropToil
         {
-            return new Toil()
+            get
             {
-                initAction = delegate
+                return new Toil()
                 {
-                    var armorRack = TargetThingA as ArmorRack;
-                    ForbidUtility.SetForbidden(armorRack, true);
-                    armorRack.DropContents();
-                }
-            };
+                    initAction = delegate
+                    {
+                        var armorRack = TargetThingA as ArmorRack;
+                        ForbidUtility.SetForbidden(armorRack, true);
+                        armorRack.DropContents();
+                    }
+                };
+            }
         }
     }
 }

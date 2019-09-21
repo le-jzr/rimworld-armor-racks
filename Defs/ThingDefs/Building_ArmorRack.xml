@@ -27,13 +27,5 @@
         <researchPrerequisites>
             <li>ComplexFurniture</li>
         </researchPrerequisites>
-        <comps>
-            <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
-                <equipDelayFactor>0.7</equipDelayFactor>
-            </li>
-            <li>
-                <compClass>CompForbiddable</compClass>
-            </li>
-        </comps>
     </ThingDef>
 </Defs>
