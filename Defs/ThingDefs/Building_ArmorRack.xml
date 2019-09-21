@@ -16,6 +16,7 @@
             <WorkToBuild>1000</WorkToBuild>
             <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
             <Cleanliness>-5</Cleanliness>
+            <Mass>5</Mass>
         </statBases>
         <size>(1,1)</size>
         <costStuffCount>40</costStuffCount>

@@ -16,6 +16,7 @@
             <WorkToBuild>5000</WorkToBuild>
             <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
             <Cleanliness>-5</Cleanliness>
+            <Mass>15</Mass>
         </statBases>
         <size>(1,2)</size>
         <hasInteractionCell>True</hasInteractionCell>
