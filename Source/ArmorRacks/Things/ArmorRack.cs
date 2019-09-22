@@ -2,6 +2,7 @@
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using ArmorRacks.Drawers;
 using ArmorRacks.ThingComps;
 using RimWorld;
@@ -256,6 +257,17 @@ namespace ArmorRacks.Things
                 },
                 hotKey = KeyBindingDefOf.Misc3
             };
+        }
+
+        public override string GetInspectString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+            if (Faction == Faction.OfPlayer)
+            {
+                var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate();
+                stringBuilder.AppendLine("Owner".Translate() + ": " + owner);    
+            }
+            return stringBuilder.ToString().TrimEndNewlines();
         }
     }
 }
