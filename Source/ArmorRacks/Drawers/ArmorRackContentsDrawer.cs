@@ -146,7 +146,6 @@ namespace ArmorRacks.Drawers
                 ApparelGraphicRecord rec;
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
                 {
-                    Log.Warning(apparel + " " + apparel.def.apparel.LastLayer.ToString() + " " + apparel.def.apparel.LastLayer.drawOrder.ToString());
                     ApparelGraphics.Add(rec);
                 }
             }

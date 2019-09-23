@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
     <ThingDef ParentName="ArmorRacks_BaseArmorRack">
-        <defName>ArmorRacks_MechanizedArmorRack</defName>
-        <label>mechanized armor rack</label>
-        <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating. Mechanized for extra equipping efficiency.</description>
-        <thingClass>ArmorRacks.Things.MechanizedArmorRack</thingClass>
+        <defName>ArmorRacks_MendingArmorRack</defName>
+        <label>mending armor rack</label>
+        <description>Good for keeping sets of apparel conveniently organized. Mechanized for extra equipping efficiency. Mends stored things via power of mechanites.</description>
+        <thingClass>ArmorRacks.Things.MendingArmorRack</thingClass>
         <graphicData>
             <texPath>ArmorRacks_MechanizedArmorRack</texPath>
             <graphicClass>Graphic_Multi</graphicClass>
@@ -13,17 +13,19 @@
         <statBases>
             <MaxHitPoints>180</MaxHitPoints>
             <Flammability>1.0</Flammability>
-            <WorkToBuild>5000</WorkToBuild>
+            <WorkToBuild>7500</WorkToBuild>
             <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
             <Cleanliness>-5</Cleanliness>
-            <Mass>15</Mass>
+            <Mass>25</Mass>
         </statBases>
         <size>(1,2)</size>
         <hasInteractionCell>True</hasInteractionCell>
         <interactionCellOffset>(0,0,2)</interactionCellOffset>
         <costList>
             <Steel>20</Steel>
+            <Uranium>20</Uranium>
             <ComponentIndustrial>4</ComponentIndustrial>
+            <ComponentSpacer>1</ComponentSpacer>
         </costList>
         <costStuffCount>80</costStuffCount>
         <stuffCategories>
@@ -31,15 +33,16 @@
         </stuffCategories>
         <defaultPlacingRot>South</defaultPlacingRot>
         <researchPrerequisites>
-            <li>ArmorRacks_MechanizedArmorRackResearch</li>
+            <li>ArmorRacks_MendingArmorRackResearch</li>
         </researchPrerequisites>
-        <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
+        <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
         <comps>
             <li Class="CompProperties_Power">
                 <compClass>CompPowerTrader</compClass>
-                <basePowerConsumption>100</basePowerConsumption>
+                <basePowerConsumption>300</basePowerConsumption>
             </li>
             <li Class="CompProperties_Flickable"/>
         </comps>
+        <tickerType>Rare</tickerType>
     </ThingDef>
 </Defs>

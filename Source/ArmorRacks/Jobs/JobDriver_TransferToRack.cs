@@ -67,7 +67,6 @@ namespace ArmorRacks.Jobs
                     {
                         case 0x11:
                         {
-                            Log.Warning("0x11" + storedRackWeapon + " " + storedPawnWeapon);
                             if (armorRack.Accepts(storedPawnWeapon))
                             {
                                 armorRack.InnerContainer.TryAdd(storedPawnWeapon);
@@ -81,15 +80,12 @@ namespace ArmorRacks.Jobs
                             break;
                         }
                         case 0x01:
-                            Log.Warning("0x01" + storedRackWeapon + " " + storedPawnWeapon);
                             armorRack.InnerContainer.TryAdd(storedRackWeapon);
                             break;
                         case 0x10:
                         {
-                            Log.Warning("0x10" + storedRackWeapon + " " + storedPawnWeapon);
                             if (armorRack.Accepts(storedPawnWeapon))
                             {
-                                Log.Warning("accepts");
                                 pawn.equipment.Remove(storedPawnWeapon);
                                 armorRack.InnerContainer.TryAdd(storedPawnWeapon);
                             }

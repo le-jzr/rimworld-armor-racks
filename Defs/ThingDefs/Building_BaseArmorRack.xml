@@ -33,6 +33,7 @@
         <minifiedDef>MinifiedThing</minifiedDef>
         <surfaceType>Item</surfaceType>
         <drawGUIOverlay>True</drawGUIOverlay>
+        <tickerType>Never</tickerType>
         <comps>
             <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
                 <equipDelayFactorPowered>0.2</equipDelayFactorPowered>
