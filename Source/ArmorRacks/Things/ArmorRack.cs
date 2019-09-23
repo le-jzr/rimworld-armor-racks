@@ -257,6 +257,10 @@ namespace ArmorRacks.Things
                 },
                 hotKey = KeyBindingDefOf.Misc3
             };
+            foreach (Gizmo g2 in StorageSettingsClipboard.CopyPasteGizmosFor(Settings))
+            {
+                yield return g2;
+            }
         }
 
         public override string GetInspectString()
