@@ -56,7 +56,7 @@ namespace ArmorRacks.Jobs
                         if (!ApparelUtility.HasPartsToWear(pawn, rackApparel.def))
                         {
                             Thing lastRemovedThing = null;
-                            armorRack.InnerContainer.TryDrop(rackApparel, ThingPlaceMode.Near, out lastRemovedThing);
+                            GenPlace.TryPlaceThing(rackApparel, armorRack.Position, armorRack.Map, ThingPlaceMode.Near, out lastRemovedThing);
                             continue;
                         }
                         if (!pawn.apparel.CanWearWithoutDroppingAnything(rackApparel.def))
