@@ -264,6 +264,7 @@ namespace ArmorRacks.Things
         public override string GetInspectString()
         {
             StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine(base.GetInspectString());
             if (Faction == Faction.OfPlayer)
             {
                 var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate();
