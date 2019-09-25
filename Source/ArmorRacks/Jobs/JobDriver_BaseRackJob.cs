@@ -12,7 +12,7 @@ namespace ArmorRacks.Jobs
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            this.FailOnDestroyedNullOrForbidden(TargetIndex.A);
+            this.FailOnDestroyedOrNull(TargetIndex.A);
             return pawn.Reserve(TargetThingA, job, errorOnFailed: errorOnFailed);
         }
 

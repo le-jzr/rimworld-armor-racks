@@ -34,18 +34,14 @@ namespace ArmorRacks.ThingComps
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
-            if (ForbidUtility.IsForbidden(armorRack, selPawn))
-            {
-                yield break;
-            }
-            
+
             if (!selPawn.CanReach(armorRack, PathEndMode.Touch, Danger.Deadly, false, TraverseMode.ByPawn))
             {
                 FloatMenuOption failer = new FloatMenuOption("CannotUseNoPath".Translate(), null, MenuOptionPriority.Default, null, null, 0f, null, null);
                 yield return failer;
                 yield break;
             }
-
+            
             var nonViolentOptionYielded = false;
             if (ArmorRackJobUtil.PawnCanEquipWeaponSet(armorRack, selPawn))
             {
@@ -62,6 +58,11 @@ namespace ArmorRacks.ThingComps
             {
                 yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_NonViolent".Translate(), null);
                 nonViolentOptionYielded = true;
+            }
+            
+            if (ForbidUtility.IsForbidden(armorRack, selPawn))
+            {
+                yield break;
             }
 
             if (ArmorRackJobUtil.RackHasItems(armorRack))

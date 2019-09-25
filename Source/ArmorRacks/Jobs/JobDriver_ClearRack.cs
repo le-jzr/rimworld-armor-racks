@@ -23,6 +23,7 @@ namespace ArmorRacks.Jobs
                 }
                 return false;
             });
+            this.FailOnForbidden(TargetIndex.A);
             return base.TryMakePreToilReservations(errorOnFailed);
         }
 

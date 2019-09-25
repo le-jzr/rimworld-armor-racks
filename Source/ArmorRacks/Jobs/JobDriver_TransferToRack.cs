@@ -92,6 +92,7 @@ namespace ArmorRacks.Jobs
                             break;
                         }
                     }
+                    ForbidUtility.SetForbidden(TargetThingA, false);
                 }
             };
         }

@@ -5,7 +5,7 @@ namespace ArmorRacks.Things
 {
     public class MendingArmorRack : MechanizedArmorRack
     {
-        public static int RareTicksPerMend = 10;
+        public static int RareTicksPerMend = 40;
         public int TickCounter = 0;
 
         public override void TickRare()
