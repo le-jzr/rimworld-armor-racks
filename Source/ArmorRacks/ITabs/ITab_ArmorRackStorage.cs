@@ -4,6 +4,7 @@ using ArmorRacks.Things;
 using RimWorld;
 using UnityEngine;
 using Verse;
+using Verse.Sound;
 
 namespace ArmorRacks.ITabs
 {
@@ -56,6 +57,18 @@ namespace ArmorRacks.ITabs
             Rect rect1 = new Rect(0.0f, y, width, 28f);
             Widgets.InfoCardButton(rect1.width - 24f, y, thing);
             rect1.width -= 24f;
+            
+            Rect rect2 = new Rect(rect1.width - 48f, y, 24f, 24f);
+            TooltipHandler.TipRegion(rect2, (TipSignal) "DropThing".Translate());
+            if (Widgets.ButtonImage(rect2, ContentFinder<Texture2D>.Get("UI/Buttons/Drop", true)))
+            {
+                SoundDefOf.Tick_High.PlayOneShotOnCamera((Map) null);
+                ArmorRack armorRack = SelThing as ArmorRack;
+                Thing droppedThing;
+                armorRack.InnerContainer.TryDrop(thing, ThingPlaceMode.Near, out droppedThing);
+            }
+            rect1.width -= 24f;
+            
             Rect rect3 = rect1;
             rect3.xMin = rect3.xMax - 60f;
             rect1.width -= 60f;
