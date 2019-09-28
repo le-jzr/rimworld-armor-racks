@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ArmorRacks.Things;
+using ArmorRacks.Utils;
 using RimWorld;
 using Verse;
 using Verse.AI;
@@ -8,6 +9,22 @@ namespace ArmorRacks.Jobs
 {
     public class JobDriverTransferToRack : JobDriver_WearRackBase
     {
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
+        {
+            AddFailCondition(delegate
+            {
+                var rack = (ArmorRack) TargetThingA;
+                if (!ArmorRackJobUtil.PawnCanEquipWeaponSet(rack, pawn))
+                {
+                    var text = "ArmorRacks_WearRack_JobFailMessage_NonViolent".Translate(pawn.LabelShort);
+                    Messages.Message(text, MessageTypeDefOf.RejectInput, false);
+                    return true;
+                }
+                return false;
+            });
+            return base.TryMakePreToilReservations(errorOnFailed);
+        }
+        
         protected override IEnumerable<Toil> MakeNewToils()
         {
             foreach (var toil in base.MakeNewToils())
