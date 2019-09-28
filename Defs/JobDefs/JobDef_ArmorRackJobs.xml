@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Defs>
     <JobDef>
-        <defName>ArmorRacks_JobClearRack</defName>
-        <driverClass>ArmorRacks.Jobs.JobDriverClearRack</driverClass>
-        <reportString>Clearing out armor rack.</reportString>
-        <suspendable>false</suspendable>
-        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
-    </JobDef>
-
-    <JobDef parentName="ArmorRacks_JobClearRack">
-        <defName>ArmorRacks_JobClearForbidRack</defName>
-        <driverClass>ArmorRacks.Jobs.JobDriverClearForbidRack</driverClass>
-    </JobDef>
-
-    <JobDef>
         <defName>ArmorRacks_JobWearRack</defName>
         <driverClass>ArmorRacks.Jobs.JobDriverWearRack</driverClass>
         <reportString>Equipping from armor rack.</reportString>
@@ -28,5 +15,4 @@
         <suspendable>false</suspendable>
         <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
     </JobDef>
-    
 </Defs>

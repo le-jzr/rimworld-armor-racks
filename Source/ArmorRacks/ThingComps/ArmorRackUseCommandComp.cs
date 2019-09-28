@@ -22,7 +22,7 @@ namespace ArmorRacks.ThingComps
                 var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
                 foreach (var rack in racks)
                 {
-                    if (rack.AssignedAnything(pawn))
+                    if (rack.AssignedPawn == pawn)
                     {
                         yield return new ArmorRackUseCommand(rack, pawn);
                     }

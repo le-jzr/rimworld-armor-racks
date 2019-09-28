@@ -1,6 +1,7 @@
 ﻿using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using RimWorld;
+using Verse;
 
 namespace ArmorRacks.Jobs
 {
@@ -20,9 +21,10 @@ namespace ArmorRacks.Jobs
                     var equipDelay = apparel.GetStatValue(StatDefOf.EquipDelay);
                     totalEquipDelay += equipDelay;
                 }
-
+                
                 var armorRackProps = armorRack.GetComp<ArmorRackComp>().Props;
-                var powerOn = armorRack.GetComp<CompPowerTrader>().PowerOn;
+                var powerComp = armorRack.GetComp<CompPowerTrader>();
+                var powerOn = powerComp != null && powerComp.PowerOn;
                 float equipDelayFactor = powerOn ? armorRackProps.equipDelayFactorPowered : armorRackProps.equipDelayFactor;
                 var waitTicks = totalEquipDelay * equipDelayFactor * 60f;
                 return (int) waitTicks;

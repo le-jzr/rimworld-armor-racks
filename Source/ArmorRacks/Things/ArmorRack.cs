@@ -220,6 +220,14 @@ namespace ArmorRacks.Things
 
         public void TryAssignPawn(Pawn pawn)
         {
+            var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
+            foreach (var rack in racks)
+            {
+                if (rack.AssignedPawn == pawn)
+                {
+                    rack.UnassignPawn();
+                }
+            }
             AssignedPawn = pawn;
         }
 
@@ -235,7 +243,15 @@ namespace ArmorRacks.Things
 
         public bool AssignedAnything(Pawn pawn)
         {
-            return AssignedPawn == pawn;
+            var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
+            foreach (var rack in racks)
+            {
+                if (rack.AssignedPawn == pawn)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -264,7 +280,11 @@ namespace ArmorRacks.Things
         public override string GetInspectString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.AppendLine(base.GetInspectString());
+            var baseString = base.GetInspectString();
+            if (baseString.Length > 0)
+            {
+                stringBuilder.AppendLine(baseString);   
+            }
             if (Faction == Faction.OfPlayer)
             {
                 var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate();

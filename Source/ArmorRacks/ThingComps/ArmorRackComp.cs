@@ -82,29 +82,10 @@ namespace ArmorRacks.ThingComps
                 {
                     yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_NonViolent".Translate(), null);
                 }
-                
-                // Clear out
-                var clearOutOption = new FloatMenuOption("ArmorRacks_ClearRack_FloatMenuLabel".Translate(), delegate
-                {
-                    var target_info = new LocalTargetInfo(armorRack);
-                    var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearRack, target_info);
-                    selPawn.jobs.TryTakeOrderedJob(clearRackJob);
-                });
-                yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutOption, selPawn, armorRack, "ReservedBy");
-            
-                // Clear out and forbid
-                var clearOutForbidOption = new FloatMenuOption("ArmorRacks_ClearForbidRack_FloatMenuLabel".Translate(), delegate
-                {
-                    var target_info = new LocalTargetInfo(armorRack);
-                    var clearRackJob = new Job(ArmorRacksJobDefOf.ArmorRacks_JobClearForbidRack, target_info);
-                    selPawn.jobs.TryTakeOrderedJob(clearRackJob);
-                });
-                yield return FloatMenuUtility.DecoratePrioritizedTask(clearOutForbidOption, selPawn, armorRack, "ReservedBy");
             }
             else
             {
                 yield return new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel_Empty".Translate(), null);
-                yield return new FloatMenuOption("ArmorRacks_ClearRack_FloatMenuLabel_Empty".Translate(), null);
             }
             
         }
