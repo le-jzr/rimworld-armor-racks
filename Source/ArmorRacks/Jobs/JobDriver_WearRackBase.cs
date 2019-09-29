@@ -1,7 +1,7 @@
-﻿using ArmorRacks.ThingComps;
+﻿using System;
+using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using RimWorld;
-using Verse;
 
 namespace ArmorRacks.Jobs
 {
@@ -12,16 +12,23 @@ namespace ArmorRacks.Jobs
             get
             {
                 var armorRack = (ArmorRack) TargetThingA;
-                var totalEquipDelay = 0f;
+                var pawnTotalEquipDelay = 0f;
+                var rackTotalEquipDelay = 0f;
                 var rackApparel = armorRack.GetStoredApparel();
                 var pawnApparel = pawn.apparel.WornApparel;
-                var usedApparel = rackApparel.Count > pawnApparel.Count ? rackApparel : pawnApparel;
-                foreach (var apparel in usedApparel)
+                
+                foreach (var apparel in rackApparel)
                 {
                     var equipDelay = apparel.GetStatValue(StatDefOf.EquipDelay);
-                    totalEquipDelay += equipDelay;
+                    rackTotalEquipDelay += equipDelay;
                 }
-                
+                foreach (var apparel in pawnApparel)
+                {
+                    var equipDelay = apparel.GetStatValue(StatDefOf.EquipDelay);
+                    pawnTotalEquipDelay += equipDelay;
+                }
+                var totalEquipDelay = Math.Max(rackTotalEquipDelay, pawnTotalEquipDelay);
+
                 var armorRackProps = armorRack.GetComp<ArmorRackComp>().Props;
                 var powerComp = armorRack.GetComp<CompPowerTrader>();
                 var powerOn = powerComp != null && powerComp.PowerOn;
