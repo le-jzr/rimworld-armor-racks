@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-    <name>Armor racks</name>
+    <name>Armor Racks</name>
     <author>khamenman</author>
     <supportedVersions>
         <li>1.0</li>
     </supportedVersions>
     <description>
-        To be added
+        Adds a variety of armor racks that help you store, display, and equip your armor in a better way.
     </description>
 </ModMetaData>
