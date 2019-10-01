@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ArmorRacks.Drawers;
 using ArmorRacks.ThingComps;
+using ArmorRacks.Utils;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -49,8 +50,8 @@ namespace ArmorRacks.Things
         public StorageSettings Settings;
         public ArmorRackInnerContainer InnerContainer;
         public ArmorRackContentsDrawer ContentsDrawer;
-        public BodyDef BodyDef => BodyDefOf.Human;
-        public BodyTypeDef BodyTypeDef => BodyTypeDefOf.Male;
+        private BodyTypeDef _BodyTypeDef = BodyTypeDefOf.Male;
+        private PawnKindDef _PawnKindDef = PawnKindDef.Named("Colonist");
         public bool StorageTabVisible => true;
         public Pawn AssignedPawn;
 
@@ -58,6 +59,26 @@ namespace ArmorRacks.Things
         {
             InnerContainer = new ArmorRackInnerContainer(this, false);
             ContentsDrawer = new ArmorRackContentsDrawer(this);
+        }
+
+        public BodyTypeDef BodyTypeDef
+        {
+            get { return _BodyTypeDef; }
+            set
+            {
+                _BodyTypeDef = value;
+                ContentsDrawer.ResolveApparelGraphics();
+            }
+        }
+
+        public PawnKindDef PawnKindDef
+        {
+            get { return _PawnKindDef; }
+            set
+            {
+                DropContents();
+                _PawnKindDef = value;
+            }
         }
 
         public StorageSettings GetStoreSettings()
@@ -98,6 +119,8 @@ namespace ArmorRacks.Things
 
         public bool CanStoreWeapon(Thing weapon)
         {
+            if (ArmorRackJobUtil.RaceCanEquip(weapon.def, PawnKindDef.race) == false)
+                return false;
             Thing storedWeapon = GetStoredWeapon();
             return storedWeapon == null;
         }
@@ -117,9 +140,11 @@ namespace ArmorRacks.Things
 
         public bool CanStoreApparel(Apparel apparel)
         {
+            if (ArmorRackJobUtil.RaceCanWear(apparel.def, PawnKindDef.race) == false)
+                return false;
             foreach (Apparel storedApparel in GetStoredApparel())
             {
-                if (!ApparelUtility.CanWearTogether(storedApparel.def, apparel.def, BodyDef))
+                if (!ApparelUtility.CanWearTogether(storedApparel.def, apparel.def, PawnKindDef.RaceProps.body))
                 {
                     return false;
                 }

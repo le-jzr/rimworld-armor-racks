@@ -1,12 +1,42 @@
 ﻿using System;
 using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
+using ArmorRacks.Utils;
 using RimWorld;
+using Verse;
 
 namespace ArmorRacks.Jobs
 {
     public abstract class JobDriver_WearRackBase : JobDriver_BaseRackJob
     {
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
+        {
+            AddFailCondition(delegate
+            {
+                var rack = (ArmorRack) TargetThingA;
+                var failText = "ArmorRacks_WearRack_JobFailMessage_RaceMismatch".Translate(pawn.LabelShort);
+                foreach (Apparel apparel in rack.GetStoredApparel())
+                {
+                    if (!ArmorRackJobUtil.RaceCanWear(apparel.def, pawn.kindDef.race))
+                    {
+                        Messages.Message(failText, MessageTypeDefOf.RejectInput, false);
+                        return true;
+                    }
+                }
+                
+                foreach (Apparel apparel in pawn.apparel.WornApparel)
+                {
+                    if (!ArmorRackJobUtil.RaceCanWear(apparel.def, rack.PawnKindDef.race))
+                    {
+                        Messages.Message(failText, MessageTypeDefOf.RejectInput, false);
+                        return true;
+                    }
+                }
+                return false;
+            });
+            return base.TryMakePreToilReservations(errorOnFailed);
+        }
+        
         public override int WaitTicks
         {
             get

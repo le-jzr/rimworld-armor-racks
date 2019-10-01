@@ -64,7 +64,7 @@ namespace ArmorRacks.Jobs
                             var storedPawnApparel = new List<Apparel>(pawn.apparel.WornApparel);
                             foreach (var pawnApparel in storedPawnApparel)
                             {
-                                if (!ApparelUtility.CanWearTogether(rackApparel.def, pawnApparel.def, armorRack.BodyDef))
+                                if (!ApparelUtility.CanWearTogether(rackApparel.def, pawnApparel.def, armorRack.PawnKindDef.RaceProps.body))
                                 {
                                     pawn.apparel.Remove(pawnApparel);
                                     armorRack.InnerContainer.TryAdd(pawnApparel);

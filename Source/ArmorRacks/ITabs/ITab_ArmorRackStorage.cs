@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ArmorRacks.Things;
+using ArmorRacks.Utils;
 using RimWorld;
 using UnityEngine;
 using Verse;
 using Verse.Sound;
+using Object = UnityEngine.Object;
 
 namespace ArmorRacks.ITabs
 {
@@ -50,6 +53,73 @@ namespace ArmorRacks.ITabs
             GUI.EndGroup();
             GUI.color = Color.white;
             Text.Anchor = TextAnchor.UpperLeft;
+            
+            Listing_Standard listingStandard2 = new Listing_Standard();
+            Rect rect2 = new Rect(0f, rect.height, 100f, 30f);
+            listingStandard2.Begin(rect2);
+            Widgets.Dropdown(
+                listingStandard2.GetRect(30f),
+                armorRack, 
+                (a => a.PawnKindDef),
+                (b => this.GetBodyDefOptions()),
+                armorRack.PawnKindDef.race.label
+            );
+            listingStandard2.End();
+            
+            Listing_Standard listingStandard1 = new Listing_Standard();
+            Rect rect1 = new Rect(105.0f, rect.height, 100f, 30f);
+            listingStandard1.Begin(rect1);
+            Widgets.Dropdown(
+                listingStandard1.GetRect(30f),
+                armorRack,
+                (a => a.BodyTypeDef),
+                (b => GetBodyDefTypeOptions()),
+                armorRack.BodyTypeDef.ToString()
+            );
+            listingStandard1.End();
+            
+            
+        }
+
+        private IEnumerable<Widgets.DropdownMenuElement<BodyTypeDef>> GetBodyDefTypeOptions()
+        {
+            ArmorRack armorRack = SelThing as ArmorRack;
+            var allBodyTypeDefs = DefDatabase<BodyTypeDef>.AllDefs;
+            foreach (BodyTypeDef bodyTypeDef in allBodyTypeDefs)
+            {
+                yield return new Widgets.DropdownMenuElement<BodyTypeDef>
+                {
+                    option = new FloatMenuOption(bodyTypeDef.ToString(), delegate()
+                    {
+                        armorRack.BodyTypeDef = bodyTypeDef;
+                    }),
+                    payload = null
+                };
+            }
+        }
+        
+        private IEnumerable<Widgets.DropdownMenuElement<PawnKindDef>> GetBodyDefOptions()
+        {
+            ArmorRack armorRack = SelThing as ArmorRack;
+            var pawnKindDefs = DefDatabase<PawnKindDef>.AllDefs;
+            var labels = new List<string>();
+            foreach (PawnKindDef pawnKindDef in pawnKindDefs)
+            {
+                Faction faction = FactionUtility.DefaultFactionFrom(pawnKindDef.defaultFactionType);
+                if (faction != null && faction == Faction.OfPlayer && labels.Contains(pawnKindDef.race.label) == false)
+                {
+                    labels.Add(pawnKindDef.race.label);
+                    yield return new Widgets.DropdownMenuElement<PawnKindDef>
+                    {
+                        option = new FloatMenuOption(pawnKindDef.race.label, delegate()
+                        {
+                            armorRack.PawnKindDef = pawnKindDef;
+                            armorRack.ContentsDrawer.ResolveApparelGraphics();
+                        }),
+                        payload = null
+                    };
+                }
+            }
         }
 
         private void DrawThingRow(ref float y, float width, Thing thing, bool inventory = false)
