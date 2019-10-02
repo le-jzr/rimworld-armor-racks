@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ArmorRacks.DefOfs;
 using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using ArmorRacks.Utils;
@@ -96,6 +97,8 @@ namespace ArmorRacks.Jobs
                         }
                     }
                     ForbidUtility.SetForbidden(TargetThingA, true);
+                    var useComp = pawn.GetComp<ArmorRackUseCommandComp>();
+                    useComp.CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobTransferToRack;
                 }
             };
         }

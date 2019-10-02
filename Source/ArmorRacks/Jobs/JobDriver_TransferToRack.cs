@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using ArmorRacks.DefOfs;
+using ArmorRacks.ThingComps;
 using ArmorRacks.Things;
 using ArmorRacks.Utils;
 using RimWorld;
@@ -110,6 +112,8 @@ namespace ArmorRacks.Jobs
                         }
                     }
                     ForbidUtility.SetForbidden(TargetThingA, false);
+                    var useComp = pawn.GetComp<ArmorRackUseCommandComp>();
+                    useComp.CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
                 }
             };
         }
