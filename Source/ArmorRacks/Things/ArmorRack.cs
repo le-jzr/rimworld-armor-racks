@@ -50,8 +50,8 @@ namespace ArmorRacks.Things
         public StorageSettings Settings;
         public ArmorRackInnerContainer InnerContainer;
         public ArmorRackContentsDrawer ContentsDrawer;
-        private BodyTypeDef _BodyTypeDef = BodyTypeDefOf.Male;
-        private PawnKindDef _PawnKindDef = PawnKindDef.Named("Colonist");
+        private BodyTypeDef _BodyTypeDef;
+        private PawnKindDef _PawnKindDef;
         public bool StorageTabVisible => true;
         public Pawn AssignedPawn;
 
@@ -63,7 +63,14 @@ namespace ArmorRacks.Things
 
         public BodyTypeDef BodyTypeDef
         {
-            get { return _BodyTypeDef; }
+            get
+            {
+                if (_BodyTypeDef != null)
+                {
+                    return _BodyTypeDef;    
+                }
+                return BodyTypeDefOf.Male;
+            }
             set
             {
                 _BodyTypeDef = value;
@@ -73,7 +80,14 @@ namespace ArmorRacks.Things
 
         public PawnKindDef PawnKindDef
         {
-            get { return _PawnKindDef; }
+            get
+            {
+                if (_PawnKindDef != null)
+                {
+                    return _PawnKindDef;
+                }
+                return PawnKindDef.Named("Colonist");
+            }
             set
             {
                 DropContents();
@@ -183,6 +197,8 @@ namespace ArmorRacks.Things
             base.ExposeData();
             Scribe_Deep.Look(ref InnerContainer, "ArmorRackInnerContainer", this);
             Scribe_Deep.Look(ref Settings, "ArmorRackSettings", this);
+            Scribe_Defs.Look(ref _BodyTypeDef, "_BodyTypeDef");
+            Scribe_Defs.Look(ref _PawnKindDef, "_PawnKindDef");
             Scribe_References.Look(ref AssignedPawn, "AssignedPawn");
         }
         
