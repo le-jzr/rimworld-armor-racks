@@ -78,6 +78,8 @@ namespace ArmorRacks.Things
             {
                 DropContents();
                 _PawnKindDef = value;
+                var defaultBodyType = ArmorRackJobUtil.GetRaceBodyTypes(value.race).ToList().First();
+                BodyTypeDef = defaultBodyType;
             }
         }
 

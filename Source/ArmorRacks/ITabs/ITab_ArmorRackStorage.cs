@@ -84,7 +84,7 @@ namespace ArmorRacks.ITabs
         private IEnumerable<Widgets.DropdownMenuElement<BodyTypeDef>> GetBodyDefTypeOptions()
         {
             ArmorRack armorRack = SelThing as ArmorRack;
-            var allBodyTypeDefs = DefDatabase<BodyTypeDef>.AllDefs;
+            var allBodyTypeDefs = ArmorRackJobUtil.GetRaceBodyTypes(armorRack.PawnKindDef.race);
             foreach (BodyTypeDef bodyTypeDef in allBodyTypeDefs)
             {
                 yield return new Widgets.DropdownMenuElement<BodyTypeDef>
