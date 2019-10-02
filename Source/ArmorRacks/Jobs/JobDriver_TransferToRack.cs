@@ -113,7 +113,10 @@ namespace ArmorRacks.Jobs
                     }
                     ForbidUtility.SetForbidden(TargetThingA, false);
                     var useComp = pawn.GetComp<ArmorRackUseCommandComp>();
-                    useComp.CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
+                    if (useComp != null)
+                    {
+                        useComp.CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
+                    }
                 }
             };
         }
