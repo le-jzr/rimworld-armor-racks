@@ -46,6 +46,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArmorRacks.cs" />
     <Compile Include="Commands\ArmorRackUseCommand.cs" />
     <Compile Include="DefOfs\JobDefOf.cs" />
     <Compile Include="Drawers\MechanizedArmorRackContentsDrawer.cs" />
@@ -70,7 +71,7 @@
   <Target Name="CopyFiles" AfterTargets="Build">
     <Copy SourceFiles="@(MySourceFiles)" DestinationFiles="@(MySourceFiles->'C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\ArmorRacks\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
-<!--  <Target Name="LaunchRimworld" AfterTargets="CopyFiles">-->
-<!--    <Exec Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { Start-Process -FilePath 'C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64.exe' -Args '-quicktest' } &quot;" />-->
-<!--  </Target>-->
+  <!--  <Target Name="LaunchRimworld" AfterTargets="CopyFiles">-->
+  <!--    <Exec Command="$(PowerShellExe) -NonInteractive -executionpolicy Unrestricted -command &quot;&amp; { Start-Process -FilePath 'C:\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64.exe' -Args '-quicktest' } &quot;" />-->
+  <!--  </Target>-->
 </Project>

@@ -14,6 +14,11 @@ namespace ArmorRacks.Jobs
 {
     public class JobDriverWearRack : JobDriver_WearRackBase
     {
+        public bool EquipSetForced()
+        {
+            return LoadedModManager.GetMod<ArmorRacksMod>().GetSettings<ArmorRacksModSettings>().EquipSetForced;
+        }
+        
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             AddFailCondition(delegate
@@ -73,6 +78,10 @@ namespace ArmorRacks.Jobs
                             }
                         }
                         pawn.apparel.Wear(rackApparel);
+                        if (EquipSetForced())
+                        {
+                            pawn.outfits.forcedHandler.SetForced(rackApparel, true);
+                        }
                     }
                     
                     int hasRackWeapon = storedRackWeapon == null ? 0x00 : 0x01;
