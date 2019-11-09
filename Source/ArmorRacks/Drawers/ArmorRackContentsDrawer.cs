@@ -36,6 +36,7 @@ namespace ArmorRacks.Drawers
             Quaternion quaternion = Quaternion.AngleAxis(angle, Vector3.up);
             Vector3 vector3_1 = drawLoc;
             Vector3 vector3_2 = drawLoc;
+            Mesh mesh = MeshPool.humanlikeBodySet.MeshAt(ArmorRack.Rotation);
             if (ArmorRack.Rotation != Rot4.North)
             {
                 vector3_2.y += 7f / 256f;
@@ -49,8 +50,7 @@ namespace ArmorRacks.Drawers
             Vector3 vector3_3 = quaternion * BaseHeadOffsetAt(ArmorRack.Rotation);
             Vector3 loc = drawLoc;
             loc.y += 1f / 32f;
-            Mesh mesh = new GraphicMeshSet(1.5f).MeshAt(ArmorRack.Rotation);
-            
+
             for (int index = 0; index < ApparelGraphics.Count; ++index)
             {
                 if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer != ApparelLayerDefOf.Shell &&

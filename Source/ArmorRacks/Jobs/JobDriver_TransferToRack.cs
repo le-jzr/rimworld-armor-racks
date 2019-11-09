@@ -88,6 +88,7 @@ namespace ArmorRacks.Jobs
                         {
                             if (armorRack.Accepts(storedPawnWeapon))
                             {
+                                pawn.equipment.Remove(storedPawnWeapon);
                                 armorRack.InnerContainer.TryAdd(storedPawnWeapon);
                                 pawn.equipment.MakeRoomFor((ThingWithComps)storedRackWeapon);
                                 pawn.equipment.AddEquipment((ThingWithComps)storedRackWeapon);
