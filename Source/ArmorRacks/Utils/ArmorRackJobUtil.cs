@@ -90,7 +90,7 @@ namespace ArmorRacks.Utils
 
         public static bool PawnCanEquipWeaponSet(ArmorRack rack, Pawn pawn)
         {
-            return !(pawn.story.WorkTagIsDisabled(WorkTags.Violent) && rack.GetStoredWeapon() != null);
+            return !(pawn.WorkTagIsDisabled(WorkTags.Violent) && rack.GetStoredWeapon() != null);
         }
 
         public static bool RaceCanWear(ThingDef apparel, ThingDef race)

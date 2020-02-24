@@ -45,7 +45,7 @@ namespace ArmorRacks.Things
         }
     }
     
-    public class ArmorRack : Building, IAssignableBuilding, IHaulDestination, IThingHolder
+    public class ArmorRack : Building, IHaulDestination, IThingHolder
     {
         public StorageSettings Settings;
         public ArmorRackInnerContainer InnerContainer;
@@ -310,7 +310,7 @@ namespace ArmorRacks.Things
                 defaultDesc = "CommandBedSetOwnerDesc".Translate(),
                 action = delegate()
                 {
-                    Find.WindowStack.Add(new Dialog_AssignBuildingOwner(this));
+                    Find.WindowStack.Add(new Dialog_AssignBuildingOwner(this.GetComp<CompAssignableToPawn_ArmorRacks>()));
                 },
                 hotKey = KeyBindingDefOf.Misc3
             };
@@ -330,7 +330,7 @@ namespace ArmorRacks.Things
             }
             if (Faction == Faction.OfPlayer)
             {
-                var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate();
+                var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate().ToString();
                 stringBuilder.AppendLine("Owner".Translate() + ": " + owner);    
             }
             return stringBuilder.ToString().TrimEndNewlines();
