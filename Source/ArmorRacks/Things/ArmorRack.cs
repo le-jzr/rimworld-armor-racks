@@ -239,9 +239,9 @@ namespace ArmorRacks.Things
             }
             yield return new Command_Action
             {
-                defaultLabel = "CommandBedSetOwnerLabel".Translate(),
+                defaultLabel = "CommandThingSetOwnerLabel".Translate(),
                 icon = ContentFinder<Texture2D>.Get("UI/Commands/AssignOwner", true),
-                defaultDesc = "CommandBedSetOwnerDesc".Translate(),
+                defaultDesc = "ArmorRacks_ArmorRackSetOwnerDescription".Translate(),
                 action = delegate()
                 {
                     Find.WindowStack.Add(new Dialog_AssignBuildingOwner(this.GetComp<CompAssignableToPawn_ArmorRacks>()));

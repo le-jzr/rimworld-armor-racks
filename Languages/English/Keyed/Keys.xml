@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
     <ArmorRacks_ModName>Armor Racks</ArmorRacks_ModName>
+    <ArmorRacks_ArmorRackSetOwnerDescription>Set the owner of this armor rack</ArmorRacks_ArmorRackSetOwnerDescription>
     <ArmorRacks_WearRack_FloatMenuLabel>Equip from armor rack</ArmorRacks_WearRack_FloatMenuLabel>
     <ArmorRacks_WearRack_FloatMenuLabel_Empty>Cannot equip from rack (empty)</ArmorRacks_WearRack_FloatMenuLabel_Empty>
     <ArmorRacks_WearRack_FloatMenuLabel_NonViolent>Cannot equip from rack (rack has weapon but pawn is non-violent)</ArmorRacks_WearRack_FloatMenuLabel_NonViolent>
