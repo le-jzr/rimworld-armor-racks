@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using ArmorRacks.Commands;
 using ArmorRacks.DefOfs;
 using ArmorRacks.Things;
@@ -22,7 +23,8 @@ namespace ArmorRacks.ThingComps
                 var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
                 foreach (var rack in racks)
                 {
-                    if (rack.AssignedPawn == pawn)
+                    var c = rack.GetComp<CompAssignableToPawn_ArmorRacks>();
+                    if (c.AssignedPawns.Contains(pawn))
                     {
                         yield return new ArmorRackUseCommand(rack, pawn);
                     }

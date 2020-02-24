@@ -53,7 +53,6 @@ namespace ArmorRacks.Things
         private BodyTypeDef _BodyTypeDef;
         private PawnKindDef _PawnKindDef;
         public bool StorageTabVisible => true;
-        public Pawn AssignedPawn;
 
         public ArmorRack()
         {
@@ -199,7 +198,6 @@ namespace ArmorRacks.Things
             Scribe_Deep.Look(ref Settings, "ArmorRackSettings", this);
             Scribe_Defs.Look(ref _BodyTypeDef, "_BodyTypeDef");
             Scribe_Defs.Look(ref _PawnKindDef, "_PawnKindDef");
-            Scribe_References.Look(ref AssignedPawn, "AssignedPawn");
         }
 
         public override void Draw()
