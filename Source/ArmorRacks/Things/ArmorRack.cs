@@ -201,7 +201,6 @@ namespace ArmorRacks.Things
             Scribe_Defs.Look(ref _PawnKindDef, "_PawnKindDef");
             Scribe_References.Look(ref AssignedPawn, "AssignedPawn");
         }
-        
 
         public override void Draw()
         {
@@ -230,71 +229,6 @@ namespace ArmorRacks.Things
         public virtual void ContentsChanged(Thing thing)
         {
             ContentsDrawer.IsApparelResolved = false;
-        }
-        
-        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
-        {
-            UnassignPawn();
-            base.DeSpawn(mode);
-        }
-
-        public IEnumerable<Pawn> AssigningCandidates
-        {
-            get
-            {
-                if (!this.Spawned)
-                    return Enumerable.Empty<Pawn>();
-                return this.Map.mapPawns.FreeColonists;
-            }
-        }
-
-        public int MaxAssignedPawnsCount => 1;
-
-        public IEnumerable<Pawn> AssignedPawns
-        {
-            get
-            {
-                if (AssignedPawn != null)
-                {
-                    yield return AssignedPawn;
-                }
-            }
-        }
-
-        public void TryAssignPawn(Pawn pawn)
-        {
-            var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
-            foreach (var rack in racks)
-            {
-                if (rack.AssignedPawn == pawn)
-                {
-                    rack.UnassignPawn();
-                }
-            }
-            AssignedPawn = pawn;
-        }
-
-        public void TryUnassignPawn(Pawn pawn)
-        {
-            UnassignPawn();
-        }
-        
-        public void UnassignPawn()
-        {
-            AssignedPawn = null;
-        }
-
-        public bool AssignedAnything(Pawn pawn)
-        {
-            var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
-            foreach (var rack in racks)
-            {
-                if (rack.AssignedPawn == pawn)
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public override IEnumerable<Gizmo> GetGizmos()
@@ -330,8 +264,10 @@ namespace ArmorRacks.Things
             }
             if (Faction == Faction.OfPlayer)
             {
-                var owner = AssignedPawn != null ? AssignedPawn.Label : "Nobody".Translate().ToString();
-                stringBuilder.AppendLine("Owner".Translate() + ": " + owner);    
+                var c = GetComp<CompAssignableToPawn_ArmorRacks>();
+                Pawn owner = c.AssignedPawns.Any() ? c.AssignedPawns.First() : null;
+                var owner_string = owner != null ? owner.Label : "Nobody".Translate().ToString();
+                stringBuilder.AppendLine("Owner".Translate() + ": " + owner_string);    
             }
             return stringBuilder.ToString().TrimEndNewlines();
         }
