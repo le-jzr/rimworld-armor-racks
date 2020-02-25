@@ -303,9 +303,7 @@
     <Compile Include="Drawers\ArmorRackContentsDrawer.cs" />
     <Compile Include="ThingComps\ArmorRackComp.cs" />
     <Compile Include="ThingComps\ArmorRackUseCommandComp.cs" />
-    <Compile Include="ThingComps\CompAssignableToPawn_ArmorRacks.cs">
-      <Link>ArmorRacks\v1.1\ThingComps\CompAssignableToPawn_ArmorRacks.cs</Link>
-    </Compile>
+    <Compile Include="ThingComps\CompAssignableToPawn_ArmorRacks.cs" />
     <Compile Include="Things\ArmorRack.cs" />
     <Compile Include="Things\MechanizedArmorRack.cs" />
     <Compile Include="Things\MendingArmorRack.cs" />
