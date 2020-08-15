@@ -17,7 +17,7 @@
     <DebugSymbols>false</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>../../v1.1/Assemblies</OutputPath>
+    <OutputPath>../../v1.2/Assemblies</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -26,13 +26,13 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>../../v1.1/Assemblies</OutputPath>
+    <OutputPath>../../v1.2/Assemblies</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.1.7357.18179, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="Assembly-CSharp, Version=1.2.7528.19839, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
       <Private>False</Private>
     </Reference>
@@ -316,6 +316,9 @@
   <ItemGroup>
     <Folder Include="..\..\v1.1\Assemblies">
       <Link>ArmorRacks\v1.1\Assemblies</Link>
+    </Folder>
+    <Folder Include="..\..\v1.2\Assemblies">
+      <Link>ArmorRacks\v1.2\Assemblies</Link>
     </Folder>
   </ItemGroup>
   <Target Name="CopyFiles" AfterTargets="Build">
