@@ -33,6 +33,7 @@
         <minifiedDef>MinifiedThing</minifiedDef>
         <surfaceType>Item</surfaceType>
         <drawGUIOverlay>True</drawGUIOverlay>
+        <drawerType>RealtimeOnly</drawerType>
         <tickerType>Never</tickerType>
         <comps>
             <li Class="ArmorRacks.ThingComps.ArmorRackCompProperties">
