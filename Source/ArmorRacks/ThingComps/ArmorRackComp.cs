@@ -34,8 +34,8 @@ namespace ArmorRacks.ThingComps
         public override IEnumerable<FloatMenuOption> CompFloatMenuOptions(Pawn selPawn)
         {
             ArmorRack armorRack = this.parent as ArmorRack;
-
-            if (!selPawn.CanReach(armorRack, PathEndMode.Touch, Danger.Deadly, false, TraverseMode.ByPawn))
+            
+            if (!selPawn.CanReach(armorRack, PathEndMode.Touch, Danger.Deadly, false, false, TraverseMode.ByPawn))
             {
                 FloatMenuOption failer = new FloatMenuOption("CannotUseNoPath".Translate(), null, MenuOptionPriority.Default, null, null, 0f, null, null);
                 yield return failer;
