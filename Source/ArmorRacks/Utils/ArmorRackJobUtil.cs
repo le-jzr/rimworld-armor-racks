@@ -42,7 +42,6 @@ namespace ArmorRacks.Utils
                 }
             }
             sw.Stop();
-            Log.Warning("ArmorRacks loaded in " + sw.Elapsed.ToString());
         }
 
         public static IEnumerable<BodyTypeDef> GetRaceBodyTypes(ThingDef race)

@@ -56,7 +56,6 @@ namespace ArmorRacks.Drawers
                 if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer != ApparelLayerDefOf.Shell &&
                     ApparelGraphics[index].sourceApparel.def.apparel.LastLayer != ApparelLayerDefOf.Overhead)
                 {
-                    Log.Warning("Drawing not shell/overhead");
                     Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
                     GenDraw.DrawMeshNowOrLater(mesh, loc, quaternion, mat, false);
                     loc.y += 1f / 32f;
@@ -71,7 +70,6 @@ namespace ArmorRacks.Drawers
             {
                 if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer == ApparelLayerDefOf.Overhead)
                 {
-                    Log.Warning("Drawing overhead");
                     if (!ApparelGraphics[index].sourceApparel.def.apparel.hatRenderedFrontOfFace)
                     {
                         Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
@@ -86,7 +84,6 @@ namespace ArmorRacks.Drawers
                 }
                 else if (ApparelGraphics[index].sourceApparel.def.apparel.LastLayer == ApparelLayerDefOf.Shell)
                 {
-                    Log.Warning("Drawing shell");
                     Material mat = ApparelGraphics[index].graphic.MatAt(ArmorRack.Rotation);
                     GenDraw.DrawMeshNowOrLater(mesh, loc, quaternion, mat, false);
                 }
@@ -136,13 +133,11 @@ namespace ArmorRacks.Drawers
             Material material = graphic == null
                 ? storedWeapon.Graphic.MatSingle
                 : graphic.SubGraphicForStackCount(1, storedWeapon.def).MatSingle;
-            Log.Warning("Drawing weapon");
             Graphics.DrawMesh(weaponMesh, weaponDrawLoc, Quaternion.AngleAxis(angle, Vector3.up), material, 0);
         }
 
         public void ResolveApparelGraphics()
         {
-            Log.Warning("Resolving graphics");
             ApparelGraphics.Clear();
             var apparelList = ArmorRack.GetStoredApparel().ToList();
             apparelList.Sort(((a, b) => a.def.apparel.LastLayer.drawOrder.CompareTo(b.def.apparel.LastLayer.drawOrder)));
@@ -151,12 +146,10 @@ namespace ArmorRacks.Drawers
                 ApparelGraphicRecord rec;
                 if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
                 {
-                    Log.Warning("Adding " + rec);
                     ApparelGraphics.Add(rec);
                 }
             }
             IsApparelResolved = true;
-            Log.Warning("Graphics resolved");
         }
         
 
