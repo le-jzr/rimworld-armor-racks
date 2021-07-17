@@ -7,6 +7,7 @@ namespace ArmorRacks.ThingComps
 {
     public class CompAssignableToPawn_ArmorRacks : CompAssignableToPawn
     {
+        protected override bool ShouldShowAssignmentGizmo() => false;
         public new int MaxAssignedPawnsCount => 1;
 
         public override void TryAssignPawn(Pawn pawn)

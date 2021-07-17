@@ -46,6 +46,7 @@
             </li>
             <li Class="CompProperties_AssignableToPawn">
                 <drawAssignmentOverlay>false</drawAssignmentOverlay>
+                <maxAssignedPawnsCount>1</maxAssignedPawnsCount>
                 <compClass>ArmorRacks.ThingComps.CompAssignableToPawn_ArmorRacks</compClass>
             </li>
         </comps>
