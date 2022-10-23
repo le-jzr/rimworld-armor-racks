@@ -269,5 +269,10 @@ namespace ArmorRacks.Things
             }
             return stringBuilder.ToString().TrimEndNewlines();
         }
+
+        public void Notify_SettingsChanged()
+        {
+            ContentsDrawer.IsApparelResolved = false;
+        }
     }
 }
