@@ -18,7 +18,7 @@ namespace ArmorRacks.ThingComps
 
         public override IEnumerable<Gizmo> CompGetGizmosExtra()
         {
-            if (parent is Pawn pawn)
+            if (parent is Pawn pawn && pawn.Map != null)
             {
                 var racks = pawn.Map.listerBuildings.AllBuildingsColonistOfClass<ArmorRack>();
                 foreach (var rack in racks)
