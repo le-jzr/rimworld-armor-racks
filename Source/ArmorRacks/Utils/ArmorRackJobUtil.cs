@@ -70,7 +70,7 @@ namespace ArmorRacks.Utils
             var partGeneratorFieldInfo = GeneralSettingsType.GetField("alienPartGenerator");
             var partGeneratorValue = Convert.ChangeType(partGeneratorFieldInfo.GetValue(generalSettingsValue), AlienPartGeneratorType);
 
-            var bodytypesInfo = AlienPartGeneratorType.GetField("alienbodytypes");
+            var bodytypesInfo = AlienPartGeneratorType.GetField("bodyTypes");
             var bodytypesValue = bodytypesInfo.GetValue(partGeneratorValue);
             var bodytypes = (List<BodyTypeDef>) bodytypesValue;
 
