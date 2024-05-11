@@ -26,7 +26,12 @@ namespace ArmorRacks.ThingComps
                     var c = rack.GetComp<CompAssignableToPawn_ArmorRacks>();
                     if (c.AssignedPawns.Contains(pawn))
                     {
-                        yield return new ArmorRackUseCommand(rack, pawn);
+                        var command = new ArmorRackUseCommand(rack, pawn);
+                        if (pawn.health.Downed)
+                        {
+                            command.Disable("IsIncapped".Translate(pawn.LabelShort, pawn));
+                        }
+                        yield return command;
                     }
                 }
             }
