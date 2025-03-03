@@ -42,6 +42,20 @@ namespace ArmorRacks.Utils
                 }
             }
             sw.Stop();
+            // fix broken settings
+            var settings = LoadedModManager.GetMod<ArmorRacksMod>().GetSettings<ArmorRacksModSettings>();
+            if (settings.EquipSpeedFactorUnpowered == 0)
+            {
+                settings.EquipSpeedFactorUnpowered = 70;
+            }
+            if (settings.EquipSpeedFactorPowered == 0)
+            {
+                settings.EquipSpeedFactorPowered = 20;
+            }
+            if (settings.RareTicksPerMend == 0)
+            {
+                settings.RareTicksPerMend = 40;
+            }
         }
 
         public static IEnumerable<BodyTypeDef> GetRaceBodyTypes(ThingDef race)
