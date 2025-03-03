@@ -46,15 +46,15 @@ namespace ArmorRacks.Utils
             var settings = LoadedModManager.GetMod<ArmorRacksMod>().GetSettings<ArmorRacksModSettings>();
             if (settings.EquipSpeedFactorUnpowered == 0)
             {
-                settings.EquipSpeedFactorUnpowered = 70;
+                settings.EquipSpeedFactorUnpowered = settings.EquipSpeedFactorUnpoweredDefault;
             }
             if (settings.EquipSpeedFactorPowered == 0)
             {
-                settings.EquipSpeedFactorPowered = 20;
+                settings.EquipSpeedFactorPowered = settings.EquipSpeedFactorPoweredDefault;
             }
             if (settings.RareTicksPerMend == 0)
             {
-                settings.RareTicksPerMend = 40;
+                settings.RareTicksPerMend = settings.RareTicksPerMendDefault;
             }
         }
 
