@@ -117,6 +117,8 @@ namespace ArmorRacks.Things
             Settings.CopyFrom(def.building.defaultStorageSettings);
         }
 
+        public bool HaulDestinationEnabled => true;
+
         public bool Accepts(Thing t)
         {
             bool result = Settings.AllowedToAccept(t);

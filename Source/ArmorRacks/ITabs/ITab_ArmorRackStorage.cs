@@ -105,7 +105,7 @@ namespace ArmorRacks.ITabs
             var labels = new List<string>();
             foreach (PawnKindDef pawnKindDef in pawnKindDefs)
             {
-                Faction faction = FactionUtility.DefaultFactionFrom(pawnKindDef.defaultFactionType);
+                Faction faction = FactionUtility.DefaultFactionFrom(pawnKindDef.defaultFactionDef);
                 if (faction != null && faction == Faction.OfPlayer && labels.Contains(pawnKindDef.race.label) == false)
                 {
                     labels.Add(pawnKindDef.race.label);

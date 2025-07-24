@@ -147,7 +147,7 @@ namespace ArmorRacks.Drawers
             foreach (Apparel apparel in apparelList)
             {
                 ApparelGraphicRecord rec;
-                if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, out rec))
+                if (ApparelGraphicRecordGetter.TryGetGraphicApparel(apparel, ArmorRack.BodyTypeDef, true, out rec))
                 {
                     ApparelGraphics.Add(rec);
                 }
