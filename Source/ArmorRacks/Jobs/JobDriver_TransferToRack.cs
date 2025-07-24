@@ -1,147 +1,152 @@
-﻿using System.Collections.Generic;
-using ArmorRacks.DefOfs;
-using ArmorRacks.ThingComps;
+using System.Collections.Generic;
+using System.Linq;
 using ArmorRacks.Things;
-using ArmorRacks.Utils;
 using RimWorld;
 using Verse;
 using Verse.AI;
 
 namespace ArmorRacks.Jobs
 {
-    public class JobDriverTransferToRack : JobDriver_WearRackBase
+    public class JobDriver_TransferToRack : JobDriver
     {
-        public bool TransferSetForced()
+        private int duration;
+
+        private HashSet<Apparel> wornApparelToTransferToStand = new HashSet<Apparel>();
+
+        private HashSet<Apparel> standApparelToTransferToPawn = new HashSet<Apparel>();
+
+        private ArmorRackBase OutfitStand => (ArmorRackBase)job.targetA.Thing;
+
+        public override void ExposeData()
         {
-            return LoadedModManager.GetMod<ArmorRacksMod>().GetSettings<ArmorRacksModSettings>().TransferSetForced;
+            base.ExposeData();
+            Scribe_Values.Look(ref duration, "duration", 0);
+            Scribe_Collections.Look(ref wornApparelToTransferToStand, "wornApparelToTransferToStand", LookMode.Reference);
+            Scribe_Collections.Look(ref standApparelToTransferToPawn, "standApparelToTransferToPawn", LookMode.Reference);
         }
-        
+
         public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
-            AddFailCondition(delegate
-            {
-                var rack = (ArmorRack) TargetThingA;
-                if (!ArmorRackJobUtil.PawnCanEquipWeaponSet(rack, pawn))
-                {
-                    var text = "ArmorRacks_WearRack_JobFailMessage_NonViolent".Translate(pawn.LabelShort);
-                    Messages.Message(text, MessageTypeDefOf.RejectInput, false);
-                    return true;
-                }
-                return false;
-            });
-            return base.TryMakePreToilReservations(errorOnFailed);
+            return pawn.Reserve(job.targetA, job, 1, -1, null, errorOnFailed);
         }
-        
+
+        public override void Notify_Starting()
+        {
+            bool setFilter = false;//OutfitStand.AutoSetStorageOnTransfer;
+
+            base.Notify_Starting();
+            standApparelToTransferToPawn.Clear();
+            wornApparelToTransferToStand.Clear();
+            var heldItems = OutfitStand.HeldItems;
+            duration = 0;
+
+            foreach (var item in pawn.apparel.WornApparel)
+            {
+                if (!setFilter && !OutfitStand.StoreSettings.AllowedToAccept(item))
+                    continue;
+
+                wornApparelToTransferToStand.Add(item);
+
+                foreach (var item2 in heldItems.OfType<Apparel>())
+                {
+                    if (!ApparelUtility.CanWearTogether(item.def, item2.def, pawn.RaceProps.body))
+                        standApparelToTransferToPawn.Add(item2);
+                }
+            }
+
+            foreach (var item in standApparelToTransferToPawn)
+                duration += (int)(item.GetStatValue(StatDefOf.EquipDelay) * 60f);
+
+            foreach (var item in wornApparelToTransferToStand)
+                duration += (int)(item.GetStatValue(StatDefOf.EquipDelay) * 60f);
+        }
+
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            foreach (var toil in base.MakeNewToils())
+            this.FailOnBurningImmobile(TargetIndex.A);
+            yield return Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.InteractionCell).FailOnDespawnedNullOrForbidden(TargetIndex.A);
+            Toil toil = ToilMaker.MakeToil("MakeNewToils");
+            toil.WithProgressBarToilDelay(TargetIndex.A);
+            toil.defaultCompleteMode = ToilCompleteMode.Delay;
+            toil.defaultDuration = duration;
+            yield return toil;
+            Toil toil2 = ToilMaker.MakeToil("MakeNewToils");
+            toil2.AddFinishAction(DoTransfer);
+            toil2.defaultCompleteMode = ToilCompleteMode.Instant;
+            yield return toil2;
+        }
+
+        private void DoTransfer()
+        {
+            bool setForced = LoadedModManager.GetMod<ArmorRacksMod>().GetSettings<ArmorRacksModSettings>().TransferSetForced;
+            bool setFilter = false; //OutfitStand.AutoSetStorageOnTransfer;
+            //OutfitStand.AutoSetStorageOnTransfer = false;
+
+            if (setFilter)
+                OutfitStand.StoreSettings.filter.SetDisallowAll();
+
+            foreach (Apparel item in standApparelToTransferToPawn)
             {
-                yield return toil;
+                if (!OutfitStand.RemoveApparel(item))
+                    Log.Warning("Could not remove apparel from Armor Rack.");
             }
-            yield return new Toil()
+
+            foreach (Apparel item in wornApparelToTransferToStand)
             {
-                initAction = delegate
+                pawn.apparel.Remove(item);
+
+                if (setFilter)
+                    OutfitStand.StoreSettings.filter.SetAllow(item.def, true);
+
+                if (!OutfitStand.AddApparel(item))
                 {
-                    var armorRack = TargetThingA as ArmorRack;
-                    var storedRackApparel = new List<Apparel>(armorRack.GetStoredApparel());
-                    var storedRackWeapon = armorRack.GetStoredWeapon();
-                    var storedPawnApparel = new List<Apparel>(pawn.apparel.WornApparel);
-                    var storedPawnWeapon = pawn.equipment.Primary;
-                    Thing lastResultingThing;
-                    
-                    armorRack.InnerContainer.Clear();
-                    if (armorRack.AutoSetStorageOnTransfer)
-                    {
-                        armorRack.Settings.filter.SetDisallowAll();
-                    }
-                    foreach (var pawnApparel in storedPawnApparel)
-                    {
-                        if (armorRack.AutoSetStorageOnTransfer)
-                        {
-                            armorRack.Settings.filter.SetAllow(pawnApparel.def, true);
-                        }
-                        if (armorRack.Accepts(pawnApparel))
-                        {
-                            pawn.apparel.Remove(pawnApparel);
-                            armorRack.InnerContainer.TryAdd(pawnApparel);
-                        }
-                    }
+                    Log.Warning("Could not add apparel to Armor Rack.");
+                    GenDrop.TryDropSpawn(item, OutfitStand.Position, OutfitStand.Map, ThingPlaceMode.Near, out Thing _);
+                }
+            }
 
-                    var leftoverRackApparel = new List<Apparel>();
-                    foreach (var rackApparel in storedRackApparel)
-                    {
-                        if (armorRack.Accepts(rackApparel))
-                        {
-                            armorRack.InnerContainer.TryAdd(rackApparel);
-                        }
-                        else
-                        {
-                            leftoverRackApparel.Add(rackApparel);
-                        }
-                    }
+            foreach (Apparel item in standApparelToTransferToPawn)
+            {
+                if (ArmorRackBase.WearableByPawn(item, pawn, false) && pawn.apparel.CanWearWithoutDroppingAnything(item.def))
+                {
+                    pawn.apparel.Wear(item);
+                    pawn.outfits.forcedHandler.SetForced(item, forced: setForced);
+                }
+                else
+                {
+                    GenDrop.TryDropSpawn(item, OutfitStand.Position, OutfitStand.Map, ThingPlaceMode.Near, out Thing _);
+                }
+            }
 
-                    foreach (Apparel leftoverApparel in leftoverRackApparel)
+            var pawnWeapon = pawn.equipment.Primary;
+            if (pawnWeapon != null && OutfitStand.StoreSettings.AllowedToAccept(pawnWeapon))
+            {
+                pawn.equipment.Remove(pawnWeapon);
+
+                var heldWeapon = OutfitStand.HeldWeapon;
+                if (heldWeapon == null)
+                {
+                    OutfitStand.AddOrDropWeapon(pawnWeapon);
+                }
+                else
+                {
+                    OutfitStand.RemoveHeldWeapon(heldWeapon);
+                    OutfitStand.AddOrDropWeapon(pawnWeapon);
+                    if (ArmorRackBase.WearableByPawn(heldWeapon, pawn, false))
                     {
-                        if (ApparelUtility.HasPartsToWear(pawn, leftoverApparel.def) && pawn.apparel.CanWearWithoutDroppingAnything(leftoverApparel.def))
-                        {
-                            pawn.apparel.Wear(leftoverApparel);
-                            if (TransferSetForced())
-                            {
-                                pawn.outfits.forcedHandler.SetForced(leftoverApparel, true);
-                            }
-                            
-                        }
-                        else
-                        {
-                            GenDrop.TryDropSpawn(leftoverApparel, armorRack.Position, armorRack.Map,
-                                ThingPlaceMode.Near, out lastResultingThing);
-                        }
+                        pawn.equipment.AddEquipment(heldWeapon);
                     }
-                    
-                    int hasRackWeapon = storedRackWeapon == null ? 0x00 : 0x01;
-                    int hasPawnWeapon = storedPawnWeapon == null ? 0x00 : 0x10;
-                    switch (hasRackWeapon | hasPawnWeapon)
+                    else
                     {
-                        case 0x11:
-                        {
-                            if (armorRack.Accepts(storedPawnWeapon))
-                            {
-                                pawn.equipment.Remove(storedPawnWeapon);
-                                armorRack.InnerContainer.TryAdd(storedPawnWeapon);
-                                pawn.equipment.MakeRoomFor((ThingWithComps)storedRackWeapon);
-                                pawn.equipment.AddEquipment((ThingWithComps)storedRackWeapon);
-                            }
-                            else
-                            {
-                                armorRack.InnerContainer.TryAdd(storedRackWeapon);
-                            }
-                            break;
-                        }
-                        case 0x01:
-                            armorRack.InnerContainer.TryAdd(storedRackWeapon);
-                            break;
-                        case 0x10:
-                        {
-                            if (armorRack.Accepts(storedPawnWeapon))
-                            {
-                                pawn.equipment.Remove(storedPawnWeapon);
-                                armorRack.InnerContainer.TryAdd(storedPawnWeapon);
-                            }
-                            break;
-                        }
-                    }
-                    ForbidUtility.SetForbidden(TargetThingA, false);
-                    var useComp = pawn.GetComp<ArmorRackUseCommandComp>();
-                    if (useComp != null)
-                    {
-                        useComp.CurArmorRackJobDef = ArmorRacksJobDefOf.ArmorRacks_JobWearRack;
-                    }
-                    if (armorRack.AutoSetStorageOnTransfer)
-                    {
-                        armorRack.AutoSetStorageOnTransfer = false;
+                        GenDrop.TryDropSpawn(heldWeapon, OutfitStand.Position, OutfitStand.Map, ThingPlaceMode.Near, out Thing _);
                     }
                 }
-            };
+            }
+
+            ForbidUtility.SetForbidden(TargetThingA, false);
+
+            this.standApparelToTransferToPawn.Clear();
+            this.wornApparelToTransferToStand.Clear();
         }
     }
 }

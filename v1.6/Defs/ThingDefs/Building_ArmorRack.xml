@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <ThingDef ParentName="ArmorRacks_BaseArmorRack">
-        <defName>ArmorRacks_ArmorRack</defName>
+    <ThingDef ParentName="ArmorRacksSimplified_BaseArmorRack">
+        <defName>ArmorRacksSimplified_ArmorRack</defName>
         <label>armor rack</label>
         <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating.</description>
         <thingClass>ArmorRacks.Things.ArmorRack</thingClass>
@@ -15,7 +15,7 @@
             <Flammability>1.0</Flammability>
             <WorkToBuild>1000</WorkToBuild>
             <WorkTableWorkSpeedFactor>0.5</WorkTableWorkSpeedFactor>
-            <Cleanliness>-5</Cleanliness>
+            <Beauty>-5</Beauty>
             <Mass>5</Mass>
         </statBases>
         <size>(1,1)</size>

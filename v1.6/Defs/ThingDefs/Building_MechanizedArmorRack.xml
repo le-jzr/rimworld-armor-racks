@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <ThingDef ParentName="ArmorRacks_BaseArmorRack">
-        <defName>ArmorRacks_MechanizedArmorRack</defName>
+    <ThingDef ParentName="ArmorRacksSimplified_BaseArmorRack">
+        <defName>ArmorRacksSimplified_MechanizedArmorRack</defName>
         <label>mechanized armor rack</label>
         <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating. Mechanized for extra equipping efficiency.</description>
         <thingClass>ArmorRacks.Things.MechanizedArmorRack</thingClass>

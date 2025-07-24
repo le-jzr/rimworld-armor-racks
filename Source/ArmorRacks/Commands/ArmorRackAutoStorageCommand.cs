@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using Verse;
 using ArmorRacks.Things;
 using UnityEngine;
 
 namespace ArmorRacks.Commands
 {
-    public class ArmorRackAutoStorageCommand: Command_Toggle
+    public class ArmorRackAutoStorageCommand : Command_Toggle
     {
-        public ArmorRack ArmorRack;
-        
-        public ArmorRackAutoStorageCommand(ArmorRack armorRack)
+        private readonly ArmorRackBase armorRack;
+
+        public ArmorRackAutoStorageCommand(ArmorRackBase armorRack)
         {
-            ArmorRack = armorRack;
+            this.armorRack = armorRack;
             icon = ContentFinder<Texture2D>.Get(armorRack.def.graphicData.texPath + "_south", false);
             defaultIconColor = armorRack.Stuff.stuffProps.color;
             defaultLabel = "ArmorRacks_AutoStorageCommand_Label".Translate();

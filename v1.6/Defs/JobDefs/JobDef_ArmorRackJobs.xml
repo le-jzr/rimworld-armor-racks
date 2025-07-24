@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+    <JobDef>
+        <defName>ArmorRacks_JobWearRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriver_WearRack</driverClass>
+        <reportString>Equipping from armor rack.</reportString>
+        <suspendable>false</suspendable>
+        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    </JobDef>
+
+    <JobDef>
+        <defName>ArmorRacks_JobTransferToRack</defName>
+        <driverClass>ArmorRacks.Jobs.JobDriver_TransferToRack</driverClass>
+        <reportString>Transferring equipment to armor rack.</reportString>
+        <suspendable>false</suspendable>
+        <allowOpportunisticPrefix>true</allowOpportunisticPrefix>
+    </JobDef>
+</Defs>

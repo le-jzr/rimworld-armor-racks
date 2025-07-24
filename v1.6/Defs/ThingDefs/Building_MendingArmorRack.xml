@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Defs>
-    <ThingDef ParentName="ArmorRacks_BaseArmorRack">
-        <defName>ArmorRacks_MendingArmorRack</defName>
+    <ThingDef ParentName="ArmorRacksSimplified_BaseArmorRack">
+        <defName>ArmorRacksSimplified_MendingArmorRack</defName>
         <label>mending armor rack</label>
         <description>Good for keeping sets of apparel conveniently organized. Mechanized for extra equipping efficiency. Mends stored things via power of mechanites.</description>
         <thingClass>ArmorRacks.Things.MendingArmorRack</thingClass>
