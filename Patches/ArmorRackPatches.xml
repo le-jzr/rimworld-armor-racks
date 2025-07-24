@@ -4,7 +4,7 @@
         <xpath>/Defs/ThingDef[@Name="BasePawn"]/comps</xpath>
         <value>
             <li>
-                <compClass>ArmorRacks.ThingComps.ArmorRackUseCommandComp</compClass>
+                <compClass>ArmorRacksSimplified.ThingComps.ArmorRackUseCommandComp</compClass>
             </li>
         </value>
     </Operation>

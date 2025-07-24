@@ -4,7 +4,7 @@
         <defName>ArmorRacksSimplified_ArmorRack</defName>
         <label>armor rack</label>
         <description>Good for keeping sets of apparel conveniently organized. Prevents deteriorating.</description>
-        <thingClass>ArmorRacks.Things.ArmorRack</thingClass>
+        <thingClass>ArmorRacksSimplified.Things.ArmorRack</thingClass>
         <graphicData>
             <texPath>ArmorRacks_ArmorRack</texPath>
             <graphicClass>Graphic_Multi</graphicClass>

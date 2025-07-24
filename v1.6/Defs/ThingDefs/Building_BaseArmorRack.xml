@@ -17,7 +17,7 @@
                 <allowNonPlayer>false</allowNonPlayer>
             </li>
             <li Class="CompProperties_AssignableToPawn">
-                <compClass>ArmorRacks.ThingComps.CompAssignableToPawn_ArmorRacks</compClass>
+                <compClass>ArmorRacksSimplified.ThingComps.CompAssignableToPawn_ArmorRacks</compClass>
             </li>
         </comps>
     </ThingDef>
