@@ -3,15 +3,15 @@
     <ArmorRacksSimplified_ModName>Armor Racks</ArmorRacksSimplified_ModName>
     <ArmorRacksSimplified_ArmorRackSetOwnerDescription>Set the owner of this armor rack</ArmorRacksSimplified_ArmorRackSetOwnerDescription>
     <ArmorRacksSimplified_WearRack_FloatMenuLabel>Equip from armor rack</ArmorRacksSimplified_WearRack_FloatMenuLabel>
-    <ArmorRacksSimplified_WearRack_FloatMenuLabel_Empty>Cannot equip from rack (empty)</ArmorRacksSimplified_WearRack_FloatMenuLabel_Empty>
-    <ArmorRacksSimplified_WearRack_JobFailMessage_Empty>{0} cannot equip from armor rack (rack is empty)</ArmorRacksSimplified_WearRack_JobFailMessage_Empty>
+    <ArmorRacksSimplified_WearRack_FloatMenuLabelDisabled>Cannot equip from armor rack</ArmorRacksSimplified_WearRack_FloatMenuLabelDisabled>
+    <ArmorRacksSimplified_RackEmpty>rack is empty</ArmorRacksSimplified_RackEmpty>
     <ArmorRacksSimplified_TransferToRack_FloatMenuLabel>Transfer to armor rack</ArmorRacksSimplified_TransferToRack_FloatMenuLabel>
-    <ArmorRacksSimplified_ArmorRackITab_LabelKey>Rack</ArmorRacksSimplified_ArmorRackITab_LabelKey>
+    <ArmorRacksSimplified_TransferToRack_FloatMenuLabelDisabled>Cannot transfer to armor rack</ArmorRacksSimplified_TransferToRack_FloatMenuLabelDisabled>
     <ArmorRacksSimplified_EquipSetForcedModSetting_Label>Equip command sets apparel as forced</ArmorRacksSimplified_EquipSetForcedModSetting_Label>
     <ArmorRacksSimplified_TransferSetForcedModSetting_Label>Transfer command sets apparel as forced</ArmorRacksSimplified_TransferSetForcedModSetting_Label>
     <ArmorRacksSimplified_AutoStorageCommand_Label>Overwrite storage on transfer</ArmorRacksSimplified_AutoStorageCommand_Label>
     <ArmorRacksSimplified_AutoStorageCommand_Desc>When enabled, next transfer command will overwrite the rack's storage settings to match the items worn by the pawn.</ArmorRacksSimplified_AutoStorageCommand_Desc>
-    <ArmorRacksSimplified_EquipSpeedFactorUnpowered_Label>Equip speed factor</ArmorRacksSimplified_EquipSpeedFactorUnpowered_Label>
+    <ArmorRacksSimplified_EquipSpeedFactor_Label>Equip speed factor</ArmorRacksSimplified_EquipSpeedFactor_Label>
     <ArmorRacksSimplified_EquipSpeedFactor_Tooltip>Modifies speed with which pawns equip/transfer items to racks. 100 = normal speed, 0 = instant.</ArmorRacksSimplified_EquipSpeedFactor_Tooltip>
     <ArmorRacksSimplified_RestoreDefaultSettings_Label>Restore default settings</ArmorRacksSimplified_RestoreDefaultSettings_Label>
 </LanguageData>

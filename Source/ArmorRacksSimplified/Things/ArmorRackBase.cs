@@ -204,36 +204,33 @@ namespace ArmorRacksSimplified.Things
             if (!selPawn.IsColonistPlayerControlled)
                 yield break;
 
-            if (!selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Deadly))
-            {
-                yield return new FloatMenuOption("CannotSwapOutfit".Translate().CapitalizeFirst() + ": " + "NoPath".Translate(), null);
-                yield break;
+            bool reachable = selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Deadly);
+            bool empty = !base.HeldItems.Any();
+
+            if (empty || !reachable) {
+                var error = reachable ? "ArmorRacksSimplified_RackEmpty" : "NoPath";
+                yield return new FloatMenuOption("ArmorRacksSimplified_WearRack_FloatMenuLabelDisabled".Translate().CapitalizeFirst() + ": " + error.Translate(), null);
+            } else {
+                var option = new FloatMenuOption("ArmorRacksSimplified_WearRack_FloatMenuLabel".Translate(),
+                    delegate
+                    {
+                        selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(ArmorRacksJobDefOf.ArmorRacksSimplified_JobWearRack, this), JobTag.Misc);
+                    });
+
+                yield return FloatMenuUtility.DecoratePrioritizedTask(option, selPawn, this);
             }
 
-            if (!base.HeldItems.Any())
-            {
-                yield return new FloatMenuOption("CannotSwapOutfit".Translate().CapitalizeFirst() + ": " + "OutfitStandEmpty".Translate(), null);
-                yield break;
-            }
-
-            // Equip from
-            var self = this;
-            var option = new FloatMenuOption("ArmorRacksSimplified_WearRack_FloatMenuLabel".Translate(),
-                delegate
-                {
-                    selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(ArmorRacksJobDefOf.ArmorRacksSimplified_JobWearRack, this), JobTag.Misc);
-                });
-
-            yield return FloatMenuUtility.DecoratePrioritizedTask(option, selPawn, this);
-
-            // Transfer to
-            option = new FloatMenuOption("ArmorRacksSimplified_TransferToRack_FloatMenuLabel".Translate(),
+            if (!reachable) {
+                yield return new FloatMenuOption("ArmorRacksSimplified_TransferToRack_FloatMenuLabelDisabled".Translate().CapitalizeFirst() + ": " + "NoPath".Translate(), null);
+            } else {
+                var option = new FloatMenuOption("ArmorRacksSimplified_TransferToRack_FloatMenuLabel".Translate(),
                 delegate
                 {
                     selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(ArmorRacksJobDefOf.ArmorRacksSimplified_JobTransferToRack, this), JobTag.Misc);
                 });
 
-            yield return FloatMenuUtility.DecoratePrioritizedTask(option, selPawn, this);
+                yield return FloatMenuUtility.DecoratePrioritizedTask(option, selPawn, this);
+            }
 
             foreach (FloatMenuOption floatMenuOption in HaulSourceUtility.GetFloatMenuOptions(this, selPawn))
                 yield return floatMenuOption;
