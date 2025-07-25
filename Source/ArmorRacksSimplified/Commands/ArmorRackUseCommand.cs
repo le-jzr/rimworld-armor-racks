@@ -26,11 +26,11 @@ namespace ArmorRacksSimplified.Commands
             {
                 if (this.armorRack.IsForbidden(this.pawn.Faction))
                 {
-                    return "ArmorRacks_TransferToRack_FloatMenuLabel".Translate();
+                    return "ArmorRacksSimplified_TransferToRack_FloatMenuLabel".Translate();
                 }
                 else
                 {
-                    return "ArmorRacks_WearRack_FloatMenuLabel".Translate();
+                    return "ArmorRacksSimplified_WearRack_FloatMenuLabel".Translate();
                 }
             }
         }

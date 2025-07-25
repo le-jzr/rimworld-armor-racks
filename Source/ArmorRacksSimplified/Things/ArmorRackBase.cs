@@ -218,7 +218,7 @@ namespace ArmorRacksSimplified.Things
 
             // Equip from
             var self = this;
-            var option = new FloatMenuOption("ArmorRacks_WearRack_FloatMenuLabel".Translate(),
+            var option = new FloatMenuOption("ArmorRacksSimplified_WearRack_FloatMenuLabel".Translate(),
                 delegate
                 {
                     selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(ArmorRacksJobDefOf.ArmorRacksSimplified_JobWearRack, this), JobTag.Misc);
@@ -227,7 +227,7 @@ namespace ArmorRacksSimplified.Things
             yield return FloatMenuUtility.DecoratePrioritizedTask(option, selPawn, this);
 
             // Transfer to
-            option = new FloatMenuOption("ArmorRacks_TransferToRack_FloatMenuLabel".Translate(),
+            option = new FloatMenuOption("ArmorRacksSimplified_TransferToRack_FloatMenuLabel".Translate(),
                 delegate
                 {
                     selPawn.jobs.TryTakeOrderedJob(JobMaker.MakeJob(ArmorRacksJobDefOf.ArmorRacksSimplified_JobTransferToRack, this), JobTag.Misc);

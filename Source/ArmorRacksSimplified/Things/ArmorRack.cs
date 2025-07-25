@@ -14,7 +14,7 @@ namespace ArmorRacksSimplified.Things
             get
             {
                 if (rackGraphic == null)
-                    rackGraphic = (Graphic_Multi)GraphicDatabase.Get<Graphic_Multi>("ArmorRacks_ArmorRack", ShaderDatabase.Cutout, new Vector2(1f, 1f), Color.white);
+                    rackGraphic = (Graphic_Multi)GraphicDatabase.Get<Graphic_Multi>("ArmorRacksSimplified_ArmorRack", ShaderDatabase.Cutout, new Vector2(1f, 1f), Color.white);
 
                 return rackGraphic;
             }
@@ -25,7 +25,7 @@ namespace ArmorRacksSimplified.Things
             get
             {
                 if (rackHeadGraphic == null)
-                    rackHeadGraphic = (Graphic_Multi)GraphicDatabase.Get<Graphic_Multi>("ArmorRacks_ArmorRackHead", ShaderDatabase.Cutout, new Vector2(1f, 1f), Color.white);
+                    rackHeadGraphic = (Graphic_Multi)GraphicDatabase.Get<Graphic_Multi>("ArmorRacksSimplified_ArmorRackHead", ShaderDatabase.Cutout, new Vector2(1f, 1f), Color.white);
 
                 return rackHeadGraphic;
             }

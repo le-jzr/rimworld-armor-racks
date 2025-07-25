@@ -34,18 +34,18 @@ namespace ArmorRacksSimplified
         {
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(inRect);
-            listingStandard.CheckboxLabeled("ArmorRacks_EquipSetForcedModSetting_Label".Translate(), ref Settings.EquipSetForced);
-            listingStandard.CheckboxLabeled("ArmorRacks_TransferSetForcedModSetting_Label".Translate(), ref Settings.TransferSetForced);
+            listingStandard.CheckboxLabeled("ArmorRacksSimplified_EquipSetForcedModSetting_Label".Translate(), ref Settings.EquipSetForced);
+            listingStandard.CheckboxLabeled("ArmorRacksSimplified_TransferSetForcedModSetting_Label".Translate(), ref Settings.TransferSetForced);
             listingStandard.GapLine();
 
             listingStandard.Label(
-                "ArmorRacks_EquipSpeedFactorUnpowered_Label".Translate(),
+                "ArmorRacksSimplified_EquipSpeedFactorUnpowered_Label".Translate(),
                 -1f,
-                "ArmorRacks_EquipSpeedFactor_Tooltip".Translate());
+                "ArmorRacksSimplified_EquipSpeedFactor_Tooltip".Translate());
             var buffer2 = Settings.EquipSpeedFactor.ToString();
             listingStandard.TextFieldNumeric(ref Settings.EquipSpeedFactor, ref buffer2);
             listingStandard.GapLine();
-            if (listingStandard.ButtonText("ArmorRacks_RestoreDefaultSettings_Label".Translate()))
+            if (listingStandard.ButtonText("ArmorRacksSimplified_RestoreDefaultSettings_Label".Translate()))
             {
                 Settings.EquipSetForced = Settings.EquipSetForcedDefault;
                 Settings.TransferSetForced = Settings.TransferSetForcedDefault;
@@ -57,7 +57,7 @@ namespace ArmorRacksSimplified
 
         public override string SettingsCategory()
         {
-            return "ArmorRacks_ModName".Translate();
+            return "ArmorRacksSimplified_ModName".Translate();
         }
     }
 }
